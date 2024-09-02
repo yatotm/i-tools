@@ -1,3 +1,4 @@
+export const html = `
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -67,7 +68,7 @@
 
       async function checkStatus(sid) {
         const interval = setInterval(async () => {
-          const response = await fetch(`/check_status/${sid}`);
+          const response = await fetch("/check_status/" + sid);
           const data = await response.json();
           if (data.status === "LoginSuccess") {
             clearInterval(interval);
@@ -123,4 +124,4 @@
       </div>
     </div>
   </body>
-</html>
+</html>`
