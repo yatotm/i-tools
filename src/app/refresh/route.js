@@ -2,7 +2,6 @@
 import { decrypt, getParams } from '../utils/decode';
 
 export const runtime = 'edge'
-export const dynamic = "force-dynamic"
 export async function POST(request) {
   try {
     const { refresh_token } = await request.json();

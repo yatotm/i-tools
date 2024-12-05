@@ -2,7 +2,6 @@
 import { decrypt, getParams } from '../../utils/decode';
 
 export const runtime = 'edge'
-export const dynamic = "force-dynamic"
 export async function GET(request, { params }) {
   try {
     const { sid } = params;
