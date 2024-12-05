@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic"
 export async function GET(request, { params }) {
   try {
     const { sid } = params;
-    const response = await fetch(`https://openapi.alipan.com/oauth/qrcode/${sid}/status`);
+    const response = await fetch(`https://openapi.alipan.com/oauth/qrcode/${sid}/status`,{next: { revalidate: 0 }});
     const statusData = await response.json();
     
     if (statusData.status === 'LoginSuccess') {
