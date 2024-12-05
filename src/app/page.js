@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
-
+import ClipboardJS from 'clipboard'; 
 export default function Home() {
   // 添加状态变量
   const [alertMsg, setAlertMsg] = useState('');
@@ -29,7 +29,8 @@ export default function Home() {
         document.getElementById("refreshToken").value = data.refresh_token;
         document.getElementById("tokens").style.display = "block";
         document.getElementById("qrCodeContainer").style.display = "none";
-        // 登录成功，不再继续调用 checkStatus
+        // 初始化复制功能
+        initializeClipboard();
       } else if (data.status === "ScanSuccess") {
         document.querySelector("h1").innerText = "扫码成功，等待手机端授权";
         // 继续轮询
@@ -50,15 +51,26 @@ export default function Home() {
     }
   }
 
-  function copyToClipboard(elementId,msg) {
-    const copyText = document.getElementById(elementId).value;
-    navigator.clipboard.writeText(copyText).then(() => {
-      // 复制成功
-      setAlertMsg(msg);
+  function initializeClipboard() {
+    // 初始化 access token 复制
+    const accessTokenClipboard = new ClipboardJS('[data-clipboard-target="#accessToken"]');
+    accessTokenClipboard.on('success', () => {
+      setAlertMsg('已复制访问令牌');
       setAlertType('success');
-    }).catch(err => {
-      // 复制失败
-      setAlertMsg("复制失败");
+    });
+    accessTokenClipboard.on('error', () => {
+      setAlertMsg('复制失败');
+      setAlertType('error');
+    });
+
+    // 初始化 refresh token 复制
+    const refreshTokenClipboard = new ClipboardJS('[data-clipboard-target="#refreshToken"]');
+    refreshTokenClipboard.on('success', () => {
+      setAlertMsg('已复制刷新令牌');
+      setAlertType('success');
+    });
+    refreshTokenClipboard.on('error', () => {
+      setAlertMsg('复制失败');
       setAlertType('error');
     });
   }
@@ -100,8 +112,8 @@ export default function Home() {
             <label htmlFor="accessToken" className="block text-gray-700 font-medium mb-2">访问令牌:</label>
             <div className="flex">
               <input type="text" id="accessToken" className="flex-1 p-2 border border-gray-300 rounded-l" readOnly />
-              <button onClick={() => copyToClipboard('accessToken','已复制访问令牌')} 
-                      className="px-4 bg-blue-500 text-white rounded-r hover:bg-blue-600">
+              <button data-clipboard-target="#accessToken"
+                className="px-4 bg-blue-500 text-white rounded-r hover:bg-blue-600">
                 复制
               </button>
             </div>
@@ -110,8 +122,8 @@ export default function Home() {
             <label htmlFor="refreshToken" className="block text-gray-700 font-medium mb-2">刷新令牌:</label>
             <div className="flex">
               <input type="text" id="refreshToken" className="flex-1 p-2 border border-gray-300 rounded-l" readOnly />
-              <button onClick={() => copyToClipboard('refreshToken','已复制刷新令牌')} 
-                      className="px-4 bg-blue-500 text-white rounded-r hover:bg-blue-600">
+              <button data-clipboard-target="#refreshToken"
+                className="px-4 bg-blue-500 text-white rounded-r hover:bg-blue-600">
                 复制
               </button>
             </div>

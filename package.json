@@ -12,11 +12,12 @@
     "deploy": "npm run pages:build && wrangler pages deploy"
   },
   "dependencies": {
+    "clipboard": "^2.0.11",
+    "crypto-js": "^4.2.0",
+    "js-md5": "^0.8.3",
     "next": "14.2.5",
     "react": "^18",
-    "react-dom": "^18",
-    "crypto-js": "^4.2.0",
-    "js-md5": "^0.8.3"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.13.6",
