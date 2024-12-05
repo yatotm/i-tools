@@ -3,7 +3,6 @@ name = "alipan-tv-nuxt"
 compatibility_date = "2024-11-06"
 main = "./dist/worker/index.js"
 assets = { directory = "./dist/public", binding = "ASSETS" }
-pages_build_output_dir = "./dist"
 # Workers Logs
 # Docs: https://developers.cloudflare.com/workers/observability/logs/workers-logs/
 # Configuration: https://developers.cloudflare.com/workers/observability/logs/workers-logs/#enable-workers-logs
