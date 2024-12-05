@@ -62,4 +62,4 @@ const generateKey = function (t) {
     console.log(md5(hashedKey));
     return md5(hashedKey);
 };
-module.exports = { decrypt,getParams };
+export { decrypt, getParams };
