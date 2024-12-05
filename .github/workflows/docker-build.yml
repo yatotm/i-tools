@@ -48,7 +48,7 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/s390x
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{ OWNER_LC }}/alipan-tv-token:latest
+          tags: ghcr.io/${{ env.OWNER_LC }}/alipan-tv-token:latest
 
       - name: Post build cleanup
         run: docker builder prune --force
