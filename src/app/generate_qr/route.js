@@ -1,12 +1,11 @@
 
 export const runtime = 'edge'
-
+export const dynamic = "force-dynamic"
 export async function POST() {
   try {
     const response = await fetch('http://api.extscreen.com/aliyundrive/qrcode', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      next: { revalidate: 0 }, // Disable cache
       body: JSON.stringify({
         scopes: ["user:base", "file:all:read", "file:all:write"].join(','),
         width: 500,

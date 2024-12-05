@@ -2,7 +2,7 @@
 import { decrypt, getParams } from '../../utils/decode';
 
 export const runtime = 'edge'
-
+export const dynamic = "force-dynamic"
 export async function GET(request, { params }) {
   try {
     const { sid } = params;
@@ -21,7 +21,6 @@ export async function GET(request, { params }) {
         const tokenResponse = await fetch('http://api.extscreen.com/aliyundrive/v3/token', {
           method: 'POST',
           headers: headers,
-          next: { revalidate: 0 }, // Disable cache
           body: JSON.stringify(sendData)
         });
         
