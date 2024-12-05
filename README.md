@@ -9,69 +9,34 @@
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`c3`](https://developers.cloudflare.com/pages/get-started/c3).
 
-## Getting Started
+# Cloudflare Pages 部署教程
 
-First, run the development server:
+## 1. Fork 项目仓库
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. 点击右上角的 "Fork" 按钮创建你自己的副本
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 2. 在 Cloudflare 中部署
 
-## Cloudflare integration
+### 2.1 前置准备
+1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com)
+2. 在左侧菜单找到并点击 "Pages"
+3. 点击 "连接到 Git" 按钮
+4. 按提示关联你的 GitHub 账号
 
-Besides the `dev` script mentioned above `c3` has added a few extra scripts that allow you to integrate the application with the [Cloudflare Pages](https://pages.cloudflare.com/) environment, these are:
-  - `pages:build` to build the application for Pages using the [`@cloudflare/next-on-pages`](https://github.com/cloudflare/next-on-pages) CLI
-  - `preview` to locally preview your Pages application using the [Wrangler](https://developers.cloudflare.com/workers/wrangler/) CLI
-  - `deploy` to deploy your Pages application using the [Wrangler](https://developers.cloudflare.com/workers/wrangler/) CLI
+### 2.2 创建项目
+1. 选择你刚才 fork 的仓库
+2. 点击 "开始设置"
+3. 在项目配置页面:
+   - 框架预设: 选择 `Next.js`（**注意：不要选择 Next.js Static HTML Export**）
+   - 构建命令: `pnpm dlx @cloudflare/next-on-pages@1`
 
-> __Note:__ while the `dev` script is optimal for local development you should preview your Pages application as well (periodically or before deployments) in order to make sure that it can properly work in the Pages environment (for more details see the [`@cloudflare/next-on-pages` recommended workflow](https://github.com/cloudflare/next-on-pages/blob/main/internal-packages/next-dev/README.md#recommended-development-workflow))
+> 提示：首次部署可能会出现错误提示,这是正常现象。按照步骤 2.3 启用 Node.js 兼容性并重新部署即可解决。
 
-### Bindings
+### 2.3 启用 Node.js 兼容性
+1. 部署完成后,进入项目设置
+2. 在“运行时”类目下找到“兼容性标志”，填入 `nodejs_compat`。
 
-Cloudflare [Bindings](https://developers.cloudflare.com/pages/functions/bindings/) are what allows you to interact with resources available in the Cloudflare Platform.
-
-You can use bindings during development, when previewing locally your application and of course in the deployed application:
-
-- To use bindings in dev mode you need to define them in the `next.config.js` file under `setupDevBindings`, this mode uses the `next-dev` `@cloudflare/next-on-pages` submodule. For more details see its [documentation](https://github.com/cloudflare/next-on-pages/blob/05b6256/internal-packages/next-dev/README.md).
-
-- To use bindings in the preview mode you need to add them to the `pages:preview` script accordingly to the `wrangler pages dev` command. For more details see its [documentation](https://developers.cloudflare.com/workers/wrangler/commands/#dev-1) or the [Pages Bindings documentation](https://developers.cloudflare.com/pages/functions/bindings/).
-
-- To use bindings in the deployed application you will need to configure them in the Cloudflare [dashboard](https://dash.cloudflare.com/). For more details see the  [Pages Bindings documentation](https://developers.cloudflare.com/pages/functions/bindings/).
-
-#### KV Example
-
-`c3` has added for you an example showing how you can use a KV binding.
-
-In order to enable the example:
-- Search for javascript/typescript lines containing the following comment:
-  ```ts
-  // KV Example:
-  ```
-  and uncomment the commented lines below it.
-- Do the same in the `wrangler.toml` file, where
-  the comment is:
-  ```
-  # KV Example:
-  ```
-- If you're using TypeScript run the `cf-typegen` script to update the `env.d.ts` file:
-  ```bash
-  npm run cf-typegen
-  # or
-  yarn cf-typegen
-  # or
-  pnpm cf-typegen
-  # or
-  bun cf-typegen
-  ```
-
-After doing this you can run the `dev` or `preview` script and visit the `/api/hello` route to see the example in action.
-
-Finally, if you also want to see the example work in the deployed application make sure to add a `MY_KV_NAMESPACE` binding to your Pages application in its [dashboard kv bindings settings section](https://dash.cloudflare.com/?to=/:account/pages/view/:pages-project/settings/functions#kv_namespace_bindings_section). After having configured it make sure to re-deploy your application.
+### 2.4 完成部署
+1. 回到 "部署" 页面
+2. 点击 "重新部署" 按钮
+3. 等待部署完成,访问分配的域名即可使用
