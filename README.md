@@ -9,7 +9,7 @@
 
 # Docker部署教程
 ```
-docker run -d -p 3000:3000 ghcr.io/ilay1678/alipan-tv-token:latest
+docker run --name=alipan-tv-token -d -p 3000:3000 ghcr.io/ilay1678/alipan-tv-token:latest 
 ```
 
 # vercel部署
