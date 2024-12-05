@@ -110,19 +110,21 @@ export default function Home() {
   return (
     <>
       {showNotice && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6 space-y-4">
-            <h2 className="text-xl font-bold text-gray-800">使用须知</h2>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              本工具能帮助你一键获取「阿里云盘TV版」的刷新令牌，完全免费。TV接口能绕过三方应用权益包的速率限制，但前提你得是SVIP。
-            </p>
-            <div className="flex justify-center pt-2">
-              <button
-                onClick={() => setShowNotice(false)}
-                className="min-w-[120px] bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition-colors"
-              >
-                知道了
-              </button>
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
+          <div className="relative w-full max-w-md mx-auto mt-16 px-4"> {/* 修改定位和边距 */}
+            <div className="bg-white rounded-lg p-6 space-y-4 shadow-xl">
+              <h2 className="text-xl font-bold text-gray-800">使用须知</h2>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                本工具能帮助你一键获取「阿里云盘TV版」的刷新令牌，完全免费。TV接口能绕过三方应用权益包的速率限制，但前提你得是SVIP。
+              </p>
+              <div className="flex justify-end pt-2"> {/* 调整按钮位置 */}
+                <button
+                  onClick={() => setShowNotice(false)}
+                  className="min-w-[100px] bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors text-sm"
+                >
+                  知道了
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -138,8 +140,8 @@ export default function Home() {
         </div>
       )}
 
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4">
-        <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-3xl">
+      <main className="min-h-screen bg-gray-100 p-4"> {/* 移除 pt-16，只保留基础内边距 */}
+        <div className="mx-auto w-full max-w-3xl bg-white shadow-lg rounded-lg p-8"> {/* ���改这里：添加水平居中 */}
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold text-gray-800">与「阿里云盘」连接</h1>
             {/* 将 Docker 标移到这里 */}
