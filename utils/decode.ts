@@ -1,6 +1,7 @@
-import md5 from "js-md5";
+import { md5 } from "js-md5";
 import crypto from "crypto-js";
-const decrypt = function (ciphertext, iv, t) {
+
+const decrypt = function (ciphertext: string, iv: string, t: number): string {
     try {
         const key = generateKey(t);
         const decrypted = crypto.AES.decrypt(ciphertext, crypto.enc.Utf8.parse(key), {
@@ -8,7 +9,7 @@ const decrypt = function (ciphertext, iv, t) {
             mode: crypto.mode.CBC,
             padding: crypto.pad.Pkcs7
         });
-        var dec = crypto.enc.Utf8.stringify(decrypted).toString();
+        const dec = crypto.enc.Utf8.stringify(decrypted).toString();
         return dec;
     } catch (error) {
         console.error("Decryption failed", error);
@@ -16,7 +17,7 @@ const decrypt = function (ciphertext, iv, t) {
     }
 };
 
-function h(charArray, modifier) {
+function h(charArray: string[], modifier: number): string {
     const uniqueChars = Array.from(new Set(charArray));
     const numericModifier = Number(modifier.toString().slice(7));
     const transformedString = uniqueChars.map(char => {
@@ -31,7 +32,7 @@ function h(charArray, modifier) {
     return transformedString;
 }
 
-function getParams(t) {
+function getParams(t: number): Record<string, string | number> {
     return {
         'akv': '2.8.1496',  // apk_version_name 版本号 
         'apv': '1.3.6', // 内部版本号
@@ -45,8 +46,8 @@ function getParams(t) {
     };
 }
 
-const generateKey = function (t) {
-    const params = getParams();
+const generateKey = function (t: number): string {
+    const params = getParams(t);
     const sortedKeys = Object.keys(params).sort();
     let concatenatedParams = "";
 
@@ -61,4 +62,5 @@ const generateKey = function (t) {
     console.log(md5(hashedKey));
     return md5(hashedKey);
 };
+
 export { decrypt, getParams };

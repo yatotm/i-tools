@@ -1,12 +1,13 @@
-
-import { decrypt, getParams } from '../../utils/decode';
+import { decrypt, getParams } from '../../../utils/decode';
+import { defineEventHandler, getRouterParams } from 'h3'
 
 export const runtime = 'edge'
-export async function GET(request, { params }) {
+
+export default defineEventHandler(async (event) => {
   try {
-    const { sid } = params;
-    const response = await fetch(`https://openapi.alipan.com/oauth/qrcode/${sid}/status`,{next: { revalidate: 0 }});
-    const statusData = await response.json();
+    const { sid } = getRouterParams(event);
+    const response = await fetch(`https://openapi.alipan.com/oauth/qrcode/${sid}/status`);
+    const statusData:any = await response.json();
     
     if (statusData.status === 'LoginSuccess') {
       try {
@@ -23,26 +24,26 @@ export async function GET(request, { params }) {
           body: JSON.stringify(sendData)
         });
         
-        const tokenData = await tokenResponse.json();
+        const tokenData:any = await tokenResponse.json();
         const jsonp = tokenData.data;
         const plainData = decrypt(jsonp.ciphertext, jsonp.iv, t);
         const tokenInfo = JSON.parse(plainData);
 
-        return Response.json({ 
+        return { 
           status: 'LoginSuccess',
           refresh_token: tokenInfo.refresh_token,
           access_token: tokenInfo.access_token 
-        });
+        };
       } catch (error) {
-        return Response.json({ status: 'LoginFailed' });
+        return { status: 'LoginFailed' };
       }
     } else {
-      return Response.json({ status: statusData.status });
+      return { status: statusData.status };
     }
-  } catch (error) {
-    return Response.json(
-      { error: error.message },
-      { status: 500 }
-    );
+  } catch (error:any) {
+    throw createError({
+      statusCode: 500,
+      message: error.message
+    });
   }
-}
+});
