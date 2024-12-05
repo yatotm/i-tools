@@ -9,7 +9,6 @@ const decrypt = function (ciphertext, iv, t) {
             padding: crypto.pad.Pkcs7
         });
         var dec = crypto.enc.Utf8.stringify(decrypted).toString();
-        console.log(dec);
         return dec;
     } catch (error) {
         console.error("Decryption failed", error);
