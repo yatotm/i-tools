@@ -1,4 +1,3 @@
-
 name: Build and Push Docker Image
 
 on:
@@ -29,6 +28,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ github.token }}
+
+      - name: set lower case owner name
+        run: |
+          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+        env:
+          OWNER: '${{ github.repository_owner }}'
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
