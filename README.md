@@ -7,7 +7,10 @@
 
 
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`c3`](https://developers.cloudflare.com/pages/get-started/c3).
+# Docker部署教程
+```
+docker run -d -p 3000:3000 ghcr.io/ilay1678/alipan-tv-token:latest
+```
 
 # Cloudflare Pages 部署教程
 

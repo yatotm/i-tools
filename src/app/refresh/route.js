@@ -19,6 +19,7 @@ export async function POST(request) {
 
     const response = await fetch('http://api.extscreen.com/aliyundrive/v3/token', {
       method: 'POST',
+      next: { revalidate: 0 }, // Disable cache
       headers: headers,
       body: JSON.stringify(sendData)
     });
