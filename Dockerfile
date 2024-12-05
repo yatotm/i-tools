@@ -15,10 +15,10 @@ RUN bun install
 COPY . .
 
 # 构建项目（如果需要）
-RUN bun build
+RUN bun run build
 
 # 暴露应用运行的端口（假设应用运行在 3000 端口）
 EXPOSE 3000
 
 # 启动应用
-CMD ["bun", "start"]
+CMD ["bun","run", "start"]
