@@ -1,6 +1,6 @@
 import { md5 } from "js-md5";
-import crypto from "crypto-js";
-
+import pkg from "crypto-js";
+const crypto = pkg;
 const decrypt = function (ciphertext: string, iv: string, t: number): string {
     try {
         const key = generateKey(t);
@@ -59,7 +59,6 @@ const generateKey = function (t: number): string {
 
     const keyArray = concatenatedParams.split("");
     const hashedKey = h(keyArray, t);
-    console.log(md5(hashedKey));
     return md5(hashedKey);
 };
 

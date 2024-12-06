@@ -1,75 +1,36 @@
-# Nuxt Minimal Starter
+# 阿里云盘TV版token获取与刷新
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## 路由:
 
-## Setup
+- `/` 在线扫码
+- `/refresh` 刷新令牌
 
-Make sure to install dependencies:
 
-```bash
-# npm
-npm install
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
+# Docker部署教程
+```
+docker run --name=alipan-tv-token -d -p 3000:3000 ghcr.io/ilay1678/alipan-tv-token:latest 
 ```
 
-## Development Server
+# vercel部署
+[<img src="https://vercel.com/button" alt="Deploy on vercel" height="30">](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FiLay1678%2Falipan-tv-token&&project-name=alipan-tv-token&repository-name=alipan-tv-token)
 
-Start the development server on `http://localhost:3000`:
+# Cloudflare Pages 部署教程
 
-```bash
-# npm
-npm run dev
+## 1. Fork 项目仓库
 
-# pnpm
-pnpm dev
+1. 点击右上角的 "Fork" 按钮创建你自己的副本
 
-# yarn
-yarn dev
+## 2. 在 Cloudflare 中部署
 
-# bun
-bun run dev
-```
+### 2.1 前置准备
+1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com)
+2. 在左侧菜单找到并点击 "Pages"
+3. 点击 "连接到 Git" 按钮
+4. 按提示关联你的 GitHub 账号
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+### 2.2 创建项目
+1. 选择你刚才 fork 的仓库
+2. 点击 "开始设置"
+3. 在项目配置页面:
+   - 框架预设: 选择 `Nuxt.js`

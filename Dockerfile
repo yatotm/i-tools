@@ -12,7 +12,7 @@ COPY package*.json ./
 RUN bun install
 
 # 复制项目文件到工作目录
-COPY . .
+COPY ./.output/* ./
 
 # 构建项目（如果需要）
 RUN bun run build
@@ -21,4 +21,4 @@ RUN bun run build
 EXPOSE 3000
 
 # 启动应用
-CMD ["bun","run", "start"]
+CMD ["bun","server/index.mjs"]

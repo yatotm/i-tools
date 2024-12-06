@@ -95,7 +95,7 @@
   </main>
 
   <a-modal
-    v-model:visible="isNoticeOpen"
+    v-model:open="isNoticeOpen"
     title="使用说明"
     @ok="closeNotice"
     :maskClosable="false"

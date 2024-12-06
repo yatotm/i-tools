@@ -26,6 +26,13 @@ export default defineNuxtConfig({
     // 启用内联样式以避免闪烁
     build: {
       cssCodeSplit: false
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler' // or "modern"
+        }
+      }
     }
   },
 
