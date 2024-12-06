@@ -14,8 +14,6 @@ RUN bun install
 # 复制项目文件到工作目录
 COPY ./.output/* ./
 
-# 构建项目（如果需要）
-RUN bun run build
 
 # 暴露应用运行的端口（假设应用运行在 3000 端口）
 EXPOSE 3000
