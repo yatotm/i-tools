@@ -17,19 +17,6 @@ export default defineNuxtConfig({
   ],
 
   routeRules: {
-    '/': { prerender: true },
-    '/**': { ssr: true },
-    // '/refresh': { 
-    //   cors: true,
-    //   headers: {
-    //     'Access-Control-Allow-Methods': '，GET, POST, OPTIONS',
-    //     'Access-Control-Allow-Headers': 'Content-Type'
-    //   },
-    //   redirect:{
-    //     to:'/api/refresh',
-    //     statusCode: 301
-    //   }
-    // }
   },
 
   antd: {
