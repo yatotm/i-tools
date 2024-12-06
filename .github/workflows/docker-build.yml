@@ -8,8 +8,8 @@ on:
     branches:
       - main
 permissions:
-  contents: read
-  pages: write
+  contents: write
+  package: write
   id-token: write
 
 jobs:
@@ -21,7 +21,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Detect package manager
         id: detect-package-manager
@@ -49,9 +52,6 @@ jobs:
       - name: Build Nuxt
         run: bun run build
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
       - name: Log into GHCR
         uses: docker/login-action@master
         with:
@@ -65,11 +65,6 @@ jobs:
         env:
           OWNER: "${{ github.repository_owner }}"
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
