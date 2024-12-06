@@ -8,9 +8,6 @@ WORKDIR /app
 # 复制 package.json 和 package-lock.json（如果有）到工作目录
 COPY package*.json ./
 
-# 安装项目依赖
-RUN bun install
-
 # 复制项目文件到工作目录
 COPY ./.output/* ./
 
