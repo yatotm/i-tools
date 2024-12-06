@@ -8,8 +8,8 @@ on:
     branches:
       - main
 permissions:
-  contents: write
-  package: write
+  contents: read
+  packages: write
   id-token: write
 
 jobs:
