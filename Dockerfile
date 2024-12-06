@@ -14,4 +14,4 @@ COPY .output/* /app
 EXPOSE 3000
 
 # 启动应用
-CMD ["bun","/app/index.mjs"]
+CMD ["bun","index.mjs"]
