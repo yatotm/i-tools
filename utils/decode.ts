@@ -1,5 +1,5 @@
 import { md5 } from "js-md5";
-const CryptoJS = require("crypto-js");
+import * as CryptoJS from "crypto-js";
 const decrypt = function (ciphertext: string, iv: string, t: number): string {
     try {
         const key = generateKey(t);
