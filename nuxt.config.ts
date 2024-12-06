@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     prerender: {
       autoSubfolderIndex: false
     }
-  }
+  },
   experimental: {
   },
 
