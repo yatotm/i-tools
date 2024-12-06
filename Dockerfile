@@ -7,11 +7,11 @@ WORKDIR /app
 
 
 # 复制项目文件到工作目录
-COPY .output ./.output/
+COPY .output/* /app
 
 
 # 暴露应用运行的端口（假设应用运行在 3000 端口）
 EXPOSE 3000
 
 # 启动应用
-CMD ["bun",".output/index.mjs"]
+CMD ["bun","/app/index.mjs"]
