@@ -120,7 +120,7 @@ const isLoading = ref(true)
 const hasAccessToken = ref(false)
 const hasRefreshToken = ref(false)
 const authorizing = ref(false)
-const isNoticeOpen = ref(false)  // 将 showNotice 改为 isNoticeOpen
+const isNoticeOpen = ref(false) 
 const accessToken = ref('')
 const refreshToken = ref('')
 
@@ -191,10 +191,10 @@ const handleAuth = (url) => {
 }
 
 onMounted(() => {
+  isNoticeOpen.value = true
   if (!hasGenerated.value) {
     generateAuthUrl()
     hasGenerated.value = true
-    isNoticeOpen.value = true
   }
 })
 

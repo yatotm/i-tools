@@ -1,4 +1,4 @@
-import { decrypt, getParams } from '../../../utils/decode';
+import { decrypt, getParams } from '@/utils/decode';
 import { defineEventHandler, getRouterParams } from 'h3'
 
 export const runtime = 'edge'
