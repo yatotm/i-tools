@@ -1,14 +1,15 @@
+import pkg from 'crypto-js';
+const { AES, enc, mode, pad, MD5 } = pkg;
 
-import crypto from "crypto-js";
 const decrypt = function (ciphertext: string, iv: string, t: number): string {
     try {
         const key = generateKey(t);
-        const decrypted = crypto.AES.decrypt(ciphertext, crypto.enc.Utf8.parse(key), {
-            iv: crypto.enc.Hex.parse(iv),
-            mode: crypto.mode.CBC,
-            padding: crypto.pad.Pkcs7
+        const decrypted = AES.decrypt(ciphertext, enc.Utf8.parse(key), {
+            iv: enc.Hex.parse(iv),
+            mode:mode.CBC,
+            padding: pad.Pkcs7
         });
-        const dec = crypto.enc.Utf8.stringify(decrypted).toString();
+        const dec = enc.Utf8.stringify(decrypted).toString();
         return dec;
     } catch (error) {
         console.error("Decryption failed", error);
@@ -59,7 +60,7 @@ const generateKey = function (t: number): string {
 
     const keyArray = concatenatedParams.split("");
     const hashedKey = h(keyArray, t);
-    return crypto.MD5(hashedKey).toString(crypto.enc.Hex);
+    return MD5(hashedKey).toString(enc.Hex);
 };
 
 export { decrypt, getParams };
