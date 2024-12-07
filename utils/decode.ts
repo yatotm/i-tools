@@ -1,16 +1,17 @@
-import { md5 } from "js-md5";
-import CryptoJS from "crypto-js";
+
+import crypto from "crypto-js";
 const decrypt = function (ciphertext: string, iv: string, t: number): string {
     try {
         const key = generateKey(t);
-        const decrypted = CryptoJS.AES.decrypt(ciphertext, CryptoJS.enc.Utf8.parse(key), {
-            iv: CryptoJS.enc.Hex.parse(iv),
-            mode: CryptoJS.mode.CBC,
-            padding: CryptoJS.pad.Pkcs7
+        const decrypted = crypto.AES.decrypt(ciphertext, crypto.enc.Utf8.parse(key), {
+            iv: crypto.enc.Hex.parse(iv),
+            mode: crypto.mode.CBC,
+            padding: crypto.pad.Pkcs7
         });
-        const dec = CryptoJS.enc.Utf8.stringify(decrypted).toString();
+        const dec = crypto.enc.Utf8.stringify(decrypted).toString();
         return dec;
     } catch (error) {
+        console.error("Decryption failed", error);
         console.error("Decryption failed", error);
         throw error;
     }
@@ -58,7 +59,7 @@ const generateKey = function (t: number): string {
 
     const keyArray = concatenatedParams.split("");
     const hashedKey = h(keyArray, t);
-    return md5(hashedKey);
+    return crypto.MD5(hashedKey).toString(crypto.enc.Hex);
 };
 
 export { decrypt, getParams };

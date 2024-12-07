@@ -34,4 +34,3 @@ docker run --name=alipan-tv-token -d -p 3000:3000 ghcr.io/ilay1678/alipan-tv-tok
 2. 点击 "开始设置"
 3. 在项目配置页面:
    - 框架预设: 选择 `Nuxt.js`
-   - 构建命令：`npx nuxi build --preset=cloudflare_pages`
