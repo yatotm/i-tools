@@ -16,7 +16,7 @@
       <div class="space-y-8">
         <div class="space-y-2">
           <div class="relative">
-            <textarea id="accessToken" v-model="accessToken"
+            <a-textarea :rows="5" id="accessToken" :value="accessToken"
               class="w-full rounded font-mono text-sm leading-normal border-2 border-dashed border-gray-300 p-3 pr-10 bg-white resize-none focus:outline-none focus:border-blue-500 transition-colors min-h-[120px] whitespace-pre-wrap overflow-auto placeholder:text-gray-400"
               readonly spellcheck="false" placeholder="访问令牌" />
             <button data-clipboard-target="#accessToken" :class="`absolute top-2 right-2 p-1 rounded transition-colors ${hasAccessToken
@@ -34,7 +34,7 @@
 
         <div class="space-y-2">
           <div class="relative">
-            <textarea id="refreshToken" v-model="refreshToken"
+            <a-textarea :rows="4" id="refreshToken" :value="refreshToken"
               class="w-full rounded font-mono text-sm leading-normal border-2 border-dashed border-gray-300 p-3 pr-10 bg-white resize-none focus:outline-none focus:border-blue-500 transition-colors min-h-[120px] whitespace-pre-wrap overflow-auto placeholder:text-gray-400"
               readonly spellcheck="false" placeholder="刷新令牌" />
             <button data-clipboard-target="#refreshToken" :class="`absolute top-2 right-2 p-1 rounded transition-colors ${hasRefreshToken
