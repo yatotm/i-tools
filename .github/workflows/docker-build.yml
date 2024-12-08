@@ -64,8 +64,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-          ghcr.io/${{ env.OWNER_LC }}/alipan-tv-token:latest
-          ${{ vars.DOCKERHUB_USERNAME }}/alipan-tv-token:latest
+            ghcr.io/${{ env.OWNER_LC }}/alipan-tv-token:latest
+            ${{ vars.DOCKERHUB_USERNAME }}/alipan-tv-token:latest
 
       - name: Post build cleanup
         run: docker builder prune --force
