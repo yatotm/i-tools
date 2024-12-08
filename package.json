@@ -7,20 +7,20 @@
     "dev": "nuxt dev",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "cf-dev": "npx nuxi build --preset=cloudflare_pages && npx wrangler pages dev dist/"
   },
   "dependencies": {
     "@ant-design-vue/nuxt": "^1.4.6",
     "@nuxtjs/tailwindcss": "^6.12.2",
     "ant-design-vue": "^4.2.6",
     "clipboard": "^2.0.11",
-    "crypto-js": "^4.2.0",
+    "crypto-es": "^2.1.0",
     "nuxt": "^3.14.1592",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
-    "@types/crypto-js": "^4.2.2",
     "nitropack": "^2.10.4",
     "sass-embedded": "^1.82.0"
   }

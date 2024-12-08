@@ -1,5 +1,6 @@
 import { decrypt, getParams } from "@/utils/decode";
 import { defineEventHandler } from 'h3'
+import type { ApiResponse, TokenResponseEncrypt } from '~/types/api'
 
 export const runtime = 'edge'
 
@@ -17,15 +18,12 @@ export default defineEventHandler(async (event) => {
       Object.entries(sendData).map(([k, v]) => [k, String(v)])
     );
 
-    const response = await fetch('http://api.extscreen.com/aliyundrive/v3/token', {
+    const tokenData = await $fetch<TokenResponseEncrypt>('http://api.extscreen.com/aliyundrive/v3/token', {
       method: 'POST',
       headers: headers,
       body: JSON.stringify(sendData)
     });
-
-    const tokenData :any = await response.json();
-    const jsonp = tokenData.data;
-    const plainData = decrypt(jsonp.ciphertext, jsonp.iv, t);
+    const plainData = decrypt(tokenData.data.ciphertext, tokenData.data.iv, t);
     const tokenInfo = JSON.parse(plainData);
 
     return {
@@ -34,10 +32,14 @@ export default defineEventHandler(async (event) => {
       refresh_token: tokenInfo.refresh_token,
       expires_in: tokenInfo.expires_in
     };
+    // 直接返回响应数据
+    return tokenData;
+    
   } catch (error:any) {
     return {
-      error: error.message,
-      statusCode: 500
-    }
+      code: 500,
+      message: error.message,
+      data: null
+    } as ApiResponse
   }
 })
