@@ -4,7 +4,7 @@
     <div class="mx-auto w-full max-w-3xl bg-white shadow-lg rounded-lg p-8">
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold text-gray-800">与「阿里云盘」连接</h1>
-        <a href="https://ghcr.io/ilay1678/alipan-tv-token" target="_blank" rel="noopener noreferrer"
+        <a href="https://hub.docker.com/r/ilay/alipan-tv-token" target="_blank" rel="noopener noreferrer"
           class="text-gray-600 hover:text-blue-500 transition-colors" title="Docker Image">
           <svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
             <path
