@@ -8,9 +8,49 @@
 
 
 # Docker部署教程
+## 直接部署
 ```
 docker run --name=alipan-tv-token -d -p 3000:3000 ghcr.io/ilay1678/alipan-tv-token:latest 
 ```
+## docker compose 配合alist
+### docker-compose.yaml
+```
+version: '3.3'
+services:
+    alist:
+        image: 'xhofe/alist:latest'
+        container_name: alist
+        volumes:
+            - '/etc/alist:/opt/alist/data'
+        ports:
+            - '5244:5244'
+        environment:
+            - PUID=0
+            - PGID=0
+            - UMASK=022
+            - TZ=Asia/Shanghai
+        restart: always
+        networks:
+            - alist-net
+    alipan-tv-token:
+        image: 'ghcr.io/ilay1678/alipan-tv-token:latest'
+        container_name: alipan-tv-token
+        ports:
+            - '3000:3000'
+        networks:
+            - alist-net
+        restart: always
+networks:
+    alist-net:
+        driver: bridge
+```
+
+### 在 alist 中配置 alipan-tv-token 的地址
+
+在 alist 的阿里云盘open配置中：
+- Oauth令牌链接填写: `http://alipan-tv-token:3000/refresh`
+- 如果需要获取 token，访问: `http://yaoIp:3000`
+
 
 # vercel部署
 [<img src="https://vercel.com/button" alt="Deploy on vercel" height="30">](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FiLay1678%2Falipan-tv-token&&project-name=alipan-tv-token&repository-name=alipan-tv-token)
