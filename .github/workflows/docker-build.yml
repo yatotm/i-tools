@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Points to a recent commit instead of `main` to avoid supply chain attacks. (The latest tag is very old.)
+      
       - name: 🎟 Get GitHub App token
         uses: actions/create-github-app-token@v1
         id: get-token
