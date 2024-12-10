@@ -17,6 +17,7 @@ permissions:
   contents: read
   packages: write
   id-token: write
+  actions: write
 
 jobs:
   build:
@@ -34,7 +35,7 @@ jobs:
       - name: Delete workflow runs for current repo
         uses: Mattraks/delete-workflow-runs@v2
         with:
-          token: ${{ steps.get-token.outputs.token }}
+          token: ${{ github.token }}
           repository: ${{ github.repository }}
           retain_days: 7
           keep_minimum_runs: 6
