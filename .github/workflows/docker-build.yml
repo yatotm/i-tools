@@ -23,9 +23,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      
+      # Points to a recent commit instead of `main` to avoid supply chain attacks. (The latest tag is very old.)
       - name: 🎟 Get GitHub App token
-        uses: navikt/github-app-token-generator@v1
+        uses: actions/create-github-app-token@v1
         id: get-token
         with:
           app-id: ${{ secrets.GH_APP_ID }}
