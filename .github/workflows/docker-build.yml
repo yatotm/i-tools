@@ -24,36 +24,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Points to a recent commit instead of `main` to avoid supply chain attacks. (The latest tag is very old.)
-      - name: 🎟 Get GitHub App token
-        uses: actions/create-github-app-token@v1
-        id: get-token
-        with:
-          app-id: ${{ secrets.GH_APP_ID }}
-          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-
-      - name: Delete workflow runs for current repo
-        uses: Mattraks/delete-workflow-runs@v2
-        with:
-          token: ${{ github.token }}
-          repository: ${{ github.repository }}
-          retain_days: 7
-          keep_minimum_runs: 6
-
-      - name: Delete deployment
-        uses: strumwolf/delete-deployment-environment@v2.3.0
-        with:
-          token: ${{ steps.get-token.outputs.token }}
-          environment: Preview
-          onlyRemoveDeployments: true
-
-      - name: Delete MAIN deployment
-        uses: strumwolf/delete-deployment-environment@v2.3.0
-        with:
-          token: ${{ steps.get-token.outputs.token }}
-          environment: Production
-          onlyRemoveDeployments: true
-        
+              
       - name: Checkout repository
         uses: actions/checkout@v2
 
