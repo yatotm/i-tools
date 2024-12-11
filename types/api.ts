@@ -22,7 +22,7 @@ export interface TokenResponseEncrypt extends ApiResponse<{
 }> {}
 
 export interface QrCodeStatus {
-  status: 'WaitLogin' | 'LoginSuccess' | 'LoginFailed';
+  status: 'WaitLogin' | 'LoginSuccess' | 'QRCodeExpired' | 'ScanSuccess' | 'LoginFailed';
   authCode?: string;
 }
 

@@ -20,8 +20,8 @@
               class="w-full rounded font-mono text-sm leading-normal border-2 border-dashed border-gray-300 p-3 pr-10 bg-white resize-none focus:outline-none focus:border-blue-500 transition-colors min-h-[120px] whitespace-pre-wrap overflow-auto placeholder:text-gray-400"
               readonly spellcheck="false" placeholder="访问令牌" />
             <button data-clipboard-target="#accessToken" :class="`absolute top-2 right-2 p-1 rounded transition-colors ${hasAccessToken
-                ? 'hover:bg-gray-100 text-gray-500 hover:text-blue-500'
-                : 'text-gray-300 cursor-not-allowed'
+              ? 'hover:bg-gray-100 text-gray-500 hover:text-blue-500'
+              : 'text-gray-300 cursor-not-allowed'
               }`" :disabled="!hasAccessToken">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -38,8 +38,8 @@
               class="w-full rounded font-mono text-sm leading-normal border-2 border-dashed border-gray-300 p-3 pr-10 bg-white resize-none focus:outline-none focus:border-blue-500 transition-colors min-h-[120px] whitespace-pre-wrap overflow-auto placeholder:text-gray-400"
               readonly spellcheck="false" placeholder="刷新令牌" />
             <button data-clipboard-target="#refreshToken" :class="`absolute top-2 right-2 p-1 rounded transition-colors ${hasRefreshToken
-                ? 'hover:bg-gray-100 text-gray-500 hover:text-blue-500'
-                : 'text-gray-300 cursor-not-allowed'
+              ? 'hover:bg-gray-100 text-gray-500 hover:text-blue-500'
+              : 'text-gray-300 cursor-not-allowed'
               }`" :disabled="!hasRefreshToken">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -127,7 +127,8 @@ async function checkStatus(sid) {
       setTimeout(() => checkStatus(sid), 2000)
     } else if (data.status === "LoginFailed") {
       message.error('登录失败，请刷新页面重试')
-      location.reload()
+    } else if (data.status === "QRCodeExpired") {
+      message.error('链接过期，请刷新页面重试')
     } else {
       setTimeout(() => checkStatus(sid), 2000)
     }
