@@ -1,4 +1,4 @@
-# 阿里云盘TV版token获取与刷新
+# TV版token获取与刷新
 
 ## 路由:
 
@@ -10,7 +10,7 @@
 # Docker部署教程
 ## 直接部署
 ```
-docker run --name=alipan-tv-token -d -p 3000:3000 ilay/alipan-tv-token:latest 
+docker run --name=tv-token -d -p 3000:3000 ilay/alipan-tv-token:latest 
 ```
 ## docker compose 配合alist
 ### docker-compose.yaml
@@ -45,7 +45,7 @@ networks:
         driver: bridge
 ```
 
-### 在 alist 中配置 alipan-tv-token 的地址
+### 在 alist 中配置 tv-token 的地址
 
 在 alist 的阿里云盘open配置中：
 - Oauth令牌链接填写: `http://alipan-tv-token:3000/refresh`
