@@ -1,4 +1,16 @@
 <template>
+    <div v-if="loading" class="loading-overlay">
+        <div class="loading-container">
+            <div class="loading-wave">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="loading-text">加载中...</div>
+        </div>
+    </div>
     <a-layout class="layout">
         <a-layout-header class="header">
             <div class="header-content max-w-3xl mx-auto px-4 flex items-center">
@@ -27,6 +39,15 @@
 
 <script setup>
 import { GithubOutlined } from '@ant-design/icons-vue'
+import { ref, onMounted } from 'vue'
+
+const loading = ref(true)
+
+onMounted(() => {
+    setTimeout(() => {
+        loading.value = false
+    }, 300)
+})
 </script>
 
 <style scoped>
