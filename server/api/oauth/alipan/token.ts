@@ -32,7 +32,6 @@ export default defineEventHandler(async (event) => {
       refresh_token: tokenInfo.refresh_token,
       expires_in: tokenInfo.expires_in
     };
-  
     
   } catch (error:any) {
     return {

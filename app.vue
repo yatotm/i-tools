@@ -1,8 +1,8 @@
 <template>
-  <head>
-    <title>阿里云盘 TV 版令牌生成器</title>
+    <head>
+    <title>爱拓工具箱</title>
   </head>
-  <div>
+   <div>
     <NuxtPage />
   </div>
 </template>
