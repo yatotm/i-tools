@@ -6,7 +6,7 @@
 # Docker部署教程
 ## 直接部署
 ```
-docker run --name=alipan-tv-token -d -p 3000:3000 ilay/i-tools:latest 
+docker run --name=i-tools -d -p 3000:3000 ilay/i-tools:latest 
 ```
 # Cloudflare Pages 部署教程
 ## 1. Fork 项目仓库
