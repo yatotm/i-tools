@@ -1,6 +1,6 @@
 
 # vercel部署
-[<img src="https://vercel.com/button" alt="Deploy on vercel" height="30">](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FiLay1678%2Falipan-tv-token&&project-name=alipan-tv-token&repository-name=alipan-tv-token)
+[<img src="https://vercel.com/button" alt="Deploy on vercel" height="30">](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FiLay1678%2Fi-tools&&project-name=i-tools&repository-name=i-tools)
 
 
 # Docker部署教程
