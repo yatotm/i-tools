@@ -2,14 +2,6 @@
 # vercel部署
 [<img src="https://vercel.com/button" alt="Deploy on vercel" height="30">](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FiLay1678%2Falipan-tv-token&&project-name=alipan-tv-token&repository-name=alipan-tv-token)
 
-# 阿里云盘TV版token获取与刷新
-
-## 路由:
-
-- `/` 在线授权登录
-- `/refresh` 刷新令牌
-
-
 
 # Docker部署教程
 ## 直接部署
