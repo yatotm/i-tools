@@ -39,14 +39,29 @@
 
 <script setup>
 import { GithubOutlined } from '@ant-design/icons-vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 const loading = ref(true)
 
+const checkPageLoaded = () => {
+  if (document.readyState === 'complete') {
+    loading.value = false
+  }
+}
+
 onMounted(() => {
-    setTimeout(() => {
-        loading.value = false
-    }, 300)
+  // 检查当前页面状态
+  if (document.readyState === 'complete') {
+    loading.value = false
+  } else {
+    // 添加页面加载完成事件监听
+    window.addEventListener('load', checkPageLoaded)
+  }
+})
+
+onBeforeUnmount(() => {
+  // 清理事件监听
+  window.removeEventListener('load', checkPageLoaded)
 })
 </script>
 
