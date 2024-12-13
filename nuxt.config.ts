@@ -1,10 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
+  ssr: true,
   nitro: {
     prerender: {
-      autoSubfolderIndex: false
+      autoSubfolderIndex: false,
+      routes: [
+        '/',
+        '/alipan-tv-token'
+      ]
     }
   },
   experimental: {
@@ -16,6 +21,9 @@ export default defineNuxtConfig({
   ],
 
   routeRules: {
+    '/': { prerender: true },
+    '/alipan-tv-token': { prerender: false },
+    '/api/**': { cors: true }
   },
 
   antd: {

@@ -1,8 +1,5 @@
 <template>
-    <head>
-    <title>爱拓工具箱</title>
-  </head>
-   <div>
+  <NuxtLayout>
     <NuxtPage />
-  </div>
+  </NuxtLayout>
 </template>

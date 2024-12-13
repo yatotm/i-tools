@@ -1,5 +1,8 @@
 <template>
-  <main class="min-h-screen bg-gray-100 p-4">
+  <head>
+        <title>与「阿里云盘」连接</title>
+    </head>
+  <div class="p-4">
     <!-- 主体部分 -->
     <div class="mx-auto w-full max-w-3xl bg-white shadow-lg rounded-lg p-8 mb-8">
       <div class="flex justify-between items-center mb-6">
@@ -82,8 +85,7 @@
         </ul>
       </div>
     </div>
-  </main>
-
+  </div>
   <a-modal v-model:open="isNoticeOpen" title="使用说明" @ok="closeNotice" :maskClosable="false" :closable="false"
     :keyboard="false">
     <p>本工具能帮助你一键获取「阿里云盘TV版」的刷新令牌，完全免费。TV接口能绕过三方应用权益包的速率限制，但前提你得是SVIP。</p>
@@ -94,7 +96,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { message } from 'ant-design-vue'
 import ClipboardJS from 'clipboard'
 
@@ -107,6 +109,9 @@ const authorizing = ref(false)
 const isNoticeOpen = ref(false)
 const accessToken = ref('')
 const refreshToken = ref('')
+
+const checkTimer = ref(null)
+const isComponentMounted = ref(true)
 
 async function generateAuthUrl() {
   try {
@@ -124,6 +129,8 @@ function closeNotice() {
 }
 
 async function checkStatus(sid) {
+  if (!isComponentMounted.value) return
+  
   try {
     const data = await $fetch("/api/alipan-tv-token/check_status/" + sid)
     if (data.status === "LoginSuccess") {
@@ -134,14 +141,14 @@ async function checkStatus(sid) {
       hasRefreshToken.value = !!data.refresh_token
       message.success('登录成功')
       initializeClipboard() // 在 token 设置后初始化 ClipboardJS
-    } else if (data.status === "ScanSuccess") {
-      setTimeout(() => checkStatus(sid), 2000)
+    } else if (data.status === "ScanSuccess" && isComponentMounted.value) {
+      checkTimer.value = setTimeout(() => checkStatus(sid), 2000)
     } else if (data.status === "LoginFailed") {
       message.error('登录失败，请刷新页面重试')
     } else if (data.status === "QRCodeExpired") {
       message.error('链接过期，请刷新页面重试')
-    } else {
-      setTimeout(() => checkStatus(sid), 2000)
+    } else if (isComponentMounted.value) {
+      checkTimer.value = setTimeout(() => checkStatus(sid), 2000)
     }
   } catch (error) {
     console.error("检查状态时出错：", error)
@@ -179,6 +186,12 @@ onMounted(() => {
   if (!hasGenerated.value) {
     generateAuthUrl()
     hasGenerated.value = true
+  }
+})
+onUnmounted(() => {
+  isComponentMounted.value = false
+  if (checkTimer.value) {
+    clearTimeout(checkTimer.value)
   }
 })
 
