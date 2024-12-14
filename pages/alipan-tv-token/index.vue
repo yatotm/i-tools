@@ -90,6 +90,8 @@
     :keyboard="false">
     <p>本工具能帮助你一键获取「阿里云盘TV版」的刷新令牌，完全免费。TV接口能绕过三方应用权益包的速率限制，但前提你得是SVIP。</p>
     <template #footer>
+      <!-- 开通会员链接 -->
+      <a-button type="primary" danger href="https://www.alipan.com/cpx/member?userCode=MjAyNTk2" target="_blank">开通会员</a-button>
       <a-button type="primary" @click="closeNotice">我知道了</a-button>
     </template>
   </a-modal>
