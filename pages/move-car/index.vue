@@ -13,7 +13,7 @@
           <a-input v-model:value="form.plateNumber" placeholder="请输入车牌号" />
         </a-form-item>
         <a-form-item name="phoneNumber" label="手机号">
-          <a-input v-model:value="form.phoneNumber" placeholder="请输入手机号" />
+          <a-input type="number" v-model:value="form.phoneNumber" placeholder="请输入手机号" />
         </a-form-item>
         <a-form-item label="是否为新能源车">
           <a-checkbox v-model:checked="form.newEnergy">是</a-checkbox>
@@ -68,7 +68,7 @@ const rules = {
 
 const handleSubmit = () => {
   formRef.value.validate().then(() => {
-    const url = new URL(window.location.origin + '/move-car-display')
+    const url = new URL(window.location.href + '/display')
     url.searchParams.append('plateNumber', form.value.plateNumber)
     url.searchParams.append('phoneNumber', form.value.phoneNumber)
     if (form.value.token) url.searchParams.append('token', form.value.token)

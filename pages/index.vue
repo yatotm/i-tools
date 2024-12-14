@@ -41,7 +41,7 @@ const tools = [
         id: 2,
         title: '挪车码牌生成',
         description: '生成挪车码牌，方便他人联系车主',
-        path: '/move-car-code',
+        path: '/move-car',
         available: true
     },
     {
