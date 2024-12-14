@@ -1,43 +1,37 @@
 <template>
-
     <head>
-        <title>快点挪车-信息</title>
+        <title>挪车信息</title>
     </head>
-    <div v-if="loading" class="loading-overlay">
-            <div class="loading-container">
-                <div class="loading-wave">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-                <div class="loading-text">加载中...</div>
-            </div>
-        </div>
-    <body>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="car" :class="{ 'new-energy': newEnergy }">
-                        <span class="car-province">{{ plateNumber.charAt(0) }}</span><span class="car-letter">{{
-                            plateNumber.charAt(1) }}</span><span class="car-dot">•</span><span class="car-number">{{
-                            plateNumber.slice(2) }}</span>
+    <Loading />
+    <body class="bg-gray-100">
+        <div class="container mx-auto p-4">
+            <div class="flex justify-center">
+                <div class="w-full max-w-md">
+                    <div :class="['car', newEnergy ? 'bg-green-500 text-white' : 'bg-blue-500 text-white']">
+                        <span class="car-province">{{ plateNumber.charAt(0) }}</span>
+                        <span class="car-letter">{{ plateNumber.charAt(1) }}</span>
+                        <span class="car-dot">•</span>
+                        <span class="car-number">{{ plateNumber.slice(2) }}</span>
                     </div>
-                    <div id="cardContainer">
-                        <div class="card">
-                            <div class="card-body">
-                                <h1 class="card-title">挪车信息</h1>
-                                <h2 class="card-text">临时停靠，请多关照</h2>
-                                <p class="card-text">车牌号: {{ plateNumber }}</p>
-                                <p class="card-text">联系电话: {{ phoneNumber }}</p>
-                                <button v-if="uid && token" type="button" class="btn btn-success"
-                                    @click="notifyOwner">通知车主</button>
-                                <button type="button" class="btn btn-primary" @click="callNumber">一键呼叫</button>
-                            </div>
+                    <a-card class="mt-4">
+                        <template #title>
+                            <span class="text-xl font-semibold">挪车信息</span>
+                        </template>
+                        <div class="mb-4">
+                            <div class="text-lg text-gray-700"><span class="font-semibold">临时停靠：</span>请多关照</div>
+                            <div class="text-lg text-gray-700"><span class="font-semibold">车牌号：</span>{{ plateNumber }}</div>
+                            <div class="text-lg text-gray-700"><span class="font-semibold">联系电话：</span>{{ phoneNumber }}</div>
                         </div>
-                    </div>
+                        <a-divider />
+                        <a-button :class="[newEnergy ? 'bg-green-500 border-green-500' : 'bg-blue-500 border-blue-500']" 
+                                  type="primary" class="mr-2 text-white" v-if="uid && token" @click="notifyOwner">
+                            通知车主
+                        </a-button>
+                        <a-button :class="[newEnergy ? 'bg-green-500 border-green-500' : 'bg-blue-500 border-blue-500']" 
+                                  type="default" class="text-white" @click="callNumber">
+                            一键呼叫
+                        </a-button>
+                    </a-card>
                 </div>
             </div>
         </div>
@@ -46,29 +40,17 @@
 
 <script setup>
 import { message } from 'ant-design-vue'
-definePageMeta({
-    layout: false,
-})
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import Loading from '~/components/Loading.vue'
+import { ref, onMounted } from 'vue'
 const plateNumber = ref('')
 const phoneNumber = ref('')
 const token = ref('')
 const uid = ref('')
 const newEnergy = ref(false)
-const loading = ref(true)
-const checkPageLoaded = () => {
-    if (document.readyState === 'complete') {
-        loading.value = false
-    }
-}
+definePageMeta({
+    layout: false,
+})
 onMounted(() => {
-    // 检查当前页面状态
-    if (document.readyState === 'complete') {
-        loading.value = false
-    } else {
-        // 添加页面加载完成事件监听
-        window.addEventListener('load', checkPageLoaded)
-    }
     const urlParams = new URLSearchParams(window.location.search)
     plateNumber.value = urlParams.get('plateNumber') || ''
     phoneNumber.value = urlParams.get('phoneNumber') || ''
@@ -76,13 +58,10 @@ onMounted(() => {
     uid.value = urlParams.get('uid') || ''
     newEnergy.value = urlParams.get('new') === 'true'
 })
-onBeforeUnmount(() => {
-    // 清理事件监听
-    window.removeEventListener('load', checkPageLoaded)
-})
 const notifyOwner = () => {
     const currentTime = new Date().getTime()
-    const lastNotifyTime = localStorage.getItem('lastNotifyTime')
+    const lastNotifyTimeKey = 'lastNotifyTime' + plateNumber.value
+    const lastNotifyTime = localStorage.getItem(lastNotifyTimeKey)
     const timeDifference = (currentTime - lastNotifyTime) / 1000
 
     if (lastNotifyTime && timeDifference < 60) {
@@ -104,7 +83,7 @@ const notifyOwner = () => {
         .then((data) => {
             if (data.code === 1000) {
                 message.success('通知已发送！')
-                localStorage.setItem('lastNotifyTime', currentTime)
+                localStorage.setItem(lastNotifyTimeKey, currentTime)
             } else {
                 message.error('通知发送失败，请稍后重试。')
             }
@@ -121,75 +100,21 @@ const callNumber = () => {
 </script>
 
 <style scoped>
-.container {
-    width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.row {
+.car {
     display: flex;
     justify-content: center;
-}
-
-.card {
-    width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.card-body {
-    padding: 20px;
-}
-
-.card-title {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.card-text {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 4px;
-    text-align: center;
-    cursor: pointer;
-    margin-right: 10px;
-}
-
-.btn-success {
-    background-color: #38b000;
-    color: #fff;
-}
-
-.btn-primary {
-    background-color: #4b5cc4;
-    color: #fff;
-}
-
-.car {
-    color: #fff;
-    background-color: #4b5cc4;
+    align-items: center;
+    padding: 10px;
     border-radius: 6px;
-    border: 1px solid #fff;
-    text-align: center;
-    padding: 10px 0;
-    box-shadow: 0 0 2px 4px #4b5cc4;
-    width: 100%;
-    margin: 15px auto;
-    font-size: 40px;
-    letter-spacing: 5px;
+    font-size: 2rem;
+    font-weight: bold;
     text-transform: uppercase;
+    box-shadow: 0 0 2px 4px;
 }
-
 .car.new-energy {
-    background-color: #38b000;
     box-shadow: 0 0 2px 4px #38b000;
+}
+.car-province, .car-letter, .car-dot, .car-number {
+    margin: 0 2px;
 }
 </style>

@@ -1,9 +1,10 @@
 <template>
+
   <head>
     <title>挪车码牌生成</title>
   </head>
   <div class="p-4">
-    <div class="mx-auto w-full max-w-3xl bg-white shadow-lg rounded-lg p-8 mb-8">
+    <a-card class="mx-auto w-full max-w-3xl mb-8">
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold text-gray-800">挪车码牌生成</h1>
       </div>
@@ -28,25 +29,24 @@
           <a-button type="primary" @click="handleSubmit">生成挪车码牌</a-button>
         </a-form-item>
       </a-form>
-    </div>
-    <div v-if="generatedUrl" class="w-full max-w-3xl bg-white shadow-lg rounded-lg p-8 text-center">
+    </a-card>
+    <a-card v-if="generatedUrl" class="w-full max-w-3xl text-center">
       <div class="prose prose-sm max-w-none">
-        <h2 class="text-xl font-bold mb-4">生成的挪车码牌链接</h2>
-        <a-typography-paragraph copyable>
-          <a :href="generatedUrl" target="_blank">{{ generatedUrl }}</a>
-        </a-typography-paragraph>
-        <div class="flex justify-center">
-          <qrcode-vue :value="generatedUrl" :size="200"></qrcode-vue>
-        </div>
+        <a-space direction="vertical" align="center">
+          <h2 class="text-xl font-bold mb-4">生成的挪车码牌链接</h2>
+          <a-qrcode :value="generatedUrl" />
+          <a-typography-paragraph copyable>
+            <a :href="generatedUrl" target="_blank">{{ generatedUrl }}</a>
+          </a-typography-paragraph>
+        </a-space>
       </div>
-    </div>
+    </a-card>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { message } from 'ant-design-vue'
-import QrcodeVue from 'qrcode.vue'
 
 const form = ref({
   plateNumber: '',
@@ -81,5 +81,4 @@ const handleSubmit = () => {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
