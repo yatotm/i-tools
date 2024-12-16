@@ -17,7 +17,7 @@
 
 ## Docker部署
 ```
-docker run --name=i-tools -d -p 3000:3000 ilay/i-tools:latest 
+docker run --name=i-tools -d -p 3000:3000 ghcr.io/ilay1678/i-tools:latest 
 ```
 
 ## Cloudflare Pages 部署
