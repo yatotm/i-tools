@@ -6,14 +6,15 @@
    - 获取阿里云盘TV端的授权令牌
 2. **挪车码牌生成**
    - 生成挪车码牌，方便他人联系车主
-3. **敬请期待**
+3. **二维码生成**
+   - 生成自定义二维码
+4. **敬请期待**
    - 更多工具正在开发中...
 
 # 部署
 
 ## vercel部署
 [<img src="https://vercel.com/button" alt="Deploy on vercel" height="30">](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FiLay1678%2Fi-tools&&project-name=i-tools&repository-name=i-tools)
-
 
 ## Docker部署
 ```

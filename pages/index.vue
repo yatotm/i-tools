@@ -52,6 +52,13 @@ const tools = [
         path: '/move-car',
         available: true
     },
+    {
+        id: 3,
+        title: '二维码生成',
+        description: '生成自定义二维码',
+        path: '/qrcode',
+        available: true
+    },
 
 ].sort((a, b) => a.id - b.id);
 </script>
