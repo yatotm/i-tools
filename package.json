@@ -23,6 +23,6 @@
   },
   "devDependencies": {
     "nitropack": "^2.10.4",
-    "sass-embedded": "^1.82.0"
+    "sass-embedded": "^1.83.0"
   }
 }
