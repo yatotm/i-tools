@@ -52,7 +52,7 @@
                 </a-form-item>
             </a-form>
         </a-card>
-        <a-card v-if="form.text" class="w-full max-w-3xl text-center">
+        <a-card v-if="form.text" class="mx-auto w-full max-w-3xl mb-8 text-center">
             <div class="prose prose-sm max-w-none">
                 <a-space direction="vertical" align="center">
                     <h2 class="text-xl font-bold mb-4">生成的二维码</h2>
