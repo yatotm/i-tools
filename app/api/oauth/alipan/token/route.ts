@@ -6,7 +6,7 @@ interface TokenResponseEncrypt {
     iv: string
   }
 }
-
+export const runtime = 'edge';
 export async function POST(request: Request) {
   try {
     const { refresh_token } = await request.json()

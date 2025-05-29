@@ -7,11 +7,13 @@ WORKDIR /app
 
 
 # 复制项目文件到工作目录
-COPY .output /app/.output
+COPY .next/standalone ./
+COPY .next/static ./.next/static
+COPY public ./public
 
 
 # 暴露应用运行的端口（假设应用运行在 3000 端口）
 EXPOSE 3000
 
 # 启动应用
-CMD ["node",".output/server/index.mjs"]
+CMD ["node", "server.js"]

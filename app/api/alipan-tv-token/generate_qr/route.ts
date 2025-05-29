@@ -6,7 +6,7 @@ interface QrCodeData {
   qrCodeUrl: string
   sid: string
 }
-
+export const runtime = 'edge';
 export async function POST() {
   try {
     const response = await fetch('http://api.extscreen.com/aliyundrive/qrcode', {
