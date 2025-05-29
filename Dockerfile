@@ -5,10 +5,11 @@ FROM node:22.12.0-alpine3.20
 WORKDIR /app
 
 # 复制 Nuxt 构建产物到工作目录
-COPY ./.output ./
+COPY .next/standalone ./
+COPY .next/static ./.next/static
 
 # 暴露应用运行的端口（假设应用运行在 3000 端口）
 EXPOSE 3000
 
-# 启动 Nuxt 应用
-CMD ["node", "server/index.mjs"]
+# 启动 Next 应用
+CMD ["node", "server.js"]

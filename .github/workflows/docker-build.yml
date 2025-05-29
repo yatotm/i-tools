@@ -46,7 +46,10 @@ jobs:
         run: bun run build
 
       - name: ls
-        run: ls ./
+        run: ls -a
+
+      - name: ls
+        run: ls .next
 
       - name: Log into GHCR
         uses: docker/login-action@master
