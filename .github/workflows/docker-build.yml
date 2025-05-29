@@ -45,6 +45,9 @@ jobs:
       - name: Build Nuxt
         run: bun run build
 
+      - name: ls
+        run: ls ./
+
       - name: Log into GHCR
         uses: docker/login-action@master
         with:
