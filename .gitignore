@@ -27,3 +27,4 @@ logs
 .wrangler
 .dev.vars
 .vercel
+.next

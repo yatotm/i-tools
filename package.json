@@ -1,28 +1,30 @@
 {
-  "name": "nuxt-app",
+  "name": "next-app",
   "private": true,
-  "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
-    "postinstall": "nuxt prepare",
-    "cf-dev": "npx nuxi build --preset=cloudflare_pages && npx wrangler pages dev dist/"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next export"
   },
   "dependencies": {
-    "@ant-design-vue/nuxt": "^1.4.6",
-    "@ant-design/icons-vue": "^7.0.1",
-    "@nuxtjs/tailwindcss": "^6.12.2",
-    "ant-design-vue": "^4.2.6",
+    "@ant-design/icons": "^5.2.6",
+    "@ant-design/nextjs-registry": "^1.0.2",
+    "antd": "^5.12.8",
     "clipboard": "^2.0.11",
     "crypto-es": "^2.1.0",
-    "nuxt": "^3.16.0",
-    "vue": "latest",
-    "vue-router": "latest"
+    "next": "^14.0.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "nitropack": "^2.10.4",
-    "sass-embedded": "^1.83.0"
+    "@types/node": "^20.10.5",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.0.4",
+    "sass": "^1.69.5",
+    "typescript": "^5.3.3"
   }
 }
