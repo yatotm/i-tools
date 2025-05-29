@@ -34,5 +34,5 @@ docker run --name=i-tools -d -p 3000:3000 ghcr.io/ilay1678/i-tools:latest
 1. 选择你刚才 fork 的仓库
 2. 点击 "开始设置"
 3. 在项目配置页面:
-   - 框架预设: 选择 `Nuxt.js`
+   - 框架预设: 选择 `Next.js`
    - 点击 "保存并部署"
