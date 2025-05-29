@@ -7,8 +7,8 @@ WORKDIR /app
 
 
 # 复制项目文件到工作目录
-COPY .next/standalone ./
-COPY public ./public
+COPY ./.next/standalone ./
+COPY ./public ./public
 
 
 # 暴露应用运行的端口（假设应用运行在 3000 端口）
