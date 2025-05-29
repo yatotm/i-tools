@@ -8,7 +8,6 @@ WORKDIR /app
 
 # 复制项目文件到工作目录
 COPY .next/standalone ./
-COPY .next/static ./.next/static
 COPY public ./public
 
 

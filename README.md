@@ -35,4 +35,5 @@ docker run --name=i-tools -d -p 3000:3000 ghcr.io/ilay1678/i-tools:latest
 2. 点击 "开始设置"
 3. 在项目配置页面:
    - 框架预设: 选择 `Next.js`
+   - 绑定-兼容性标识 nodejs_compat
    - 点击 "保存并部署"
