@@ -28,10 +28,10 @@ interface TokenRequest {
 
 export async function GET(
   request: Request,
-  { params }: { params: { sid: string } }
+  { params }: { params: Promise<{ sid: string }> }
 ) {
   try {
-    const { sid } = params
+    const { sid } = await params
     
     const statusResponse = await fetch(`https://openapi.alipan.com/oauth/qrcode/${sid}/status`)
     
