@@ -13,7 +13,8 @@ import {
   Col,
   Flex,
   Spin,
-  Alert
+  Alert,
+  App
 } from "antd";
 import {
   CopyOutlined,
@@ -31,6 +32,7 @@ const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
 
 export default function AlipanTvToken() {
+  const { message } = App.useApp();
   const [hasGenerated, setHasGenerated] = useState(false);
   const [authUrl, setAuthUrl] = useState("");
   const [isLoading, setIsLoading] = useState(true);
