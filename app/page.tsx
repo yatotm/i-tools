@@ -1,183 +1,416 @@
-'use client'
+"use client";
 
-import { 
-  Card, 
-  Row, 
-  Col, 
-  Typography, 
-  Tag, 
-  Space, 
-  Button, 
+import {
+  Card,
+  Row,
+  Col,
+  Typography,
+  Tag,
+  Space,
+  Button,
   Avatar,
   Badge,
-  Flex
-} from 'antd'
-import { 
-  QrcodeOutlined, 
-  CloudDownloadOutlined, 
+  Flex,
+} from "antd";
+import {
+  QrcodeOutlined,
+  CloudDownloadOutlined,
   CarOutlined,
   RightOutlined,
   CodeOutlined,
   CloudOutlined,
-  CustomerServiceOutlined
-} from '@ant-design/icons'
-import Link from 'next/link'
+  CustomerServiceOutlined,
+  ToolOutlined,
+  AppstoreOutlined,
+} from "@ant-design/icons";
+import Link from "next/link";
+import { useState } from "react";
 
-const { Title, Text } = Typography
+const { Title, Text } = Typography;
 
 interface Tool {
-  id: string
-  title: string
-  description: string
-  icon: React.ReactNode
-  href: string
-  status: 'available' | 'coming-soon'
-  category: string
-  tags: string[]
-  color: string
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  href: string;
+  status: "available" | "coming-soon";
+  category: string;
+  tags: string[];
+  color: string;
 }
 
 const tools: Tool[] = [
   {
-    id: 'qrcode',
-    title: '二维码生成器',
-    description: '快速生成各种类型的二维码，支持文本、链接、WiFi等多种格式，提供高清下载和自定义样式',
+    id: "qrcode",
+    title: "二维码生成器",
+    description:
+      "快速生成各种类型的二维码，支持文本、链接、WiFi等多种格式，提供高清下载和自定义样式",
     icon: <QrcodeOutlined />,
-    href: '/qrcode',
-    status: 'available',
-    category: '编码工具',
-    tags: ['二维码', 'QR Code', '生成器'],
-    color: '#10b981'
+    href: "/qrcode",
+    status: "available",
+    category: "编码工具",
+    tags: ["二维码", "QR Code", "生成器"],
+    color: "#10b981",
   },
   {
-    id: 'alipan-tv-token',
-    title: '阿里云盘TV Token',
-    description: '获取阿里云盘TV版授权Token，轻松在电视端使用阿里云盘，支持扫码登录和Token管理',
+    id: "alipan-tv-token",
+    title: "阿里云盘TV Token",
+    description:
+      "获取阿里云盘TV版授权Token，轻松在电视端使用阿里云盘，支持扫码登录和Token管理",
     icon: <CloudDownloadOutlined />,
-    href: '/alipan-tv-token',
-    status: 'available',
-    category: '云存储',
-    tags: ['阿里云盘', 'TV版', 'Token'],
-    color: '#14b8a6'
+    href: "/alipan-tv-token",
+    status: "available",
+    category: "云存储",
+    tags: ["阿里云盘", "TV版", "Token"],
+    color: "#14b8a6",
   },
   {
-    id: 'move-car',
-    title: '挪车码牌生成器',
-    description: '生成专属挪车码牌，支持微信小程序推送通知，让挪车变得更加便捷高效',
+    id: "move-car",
+    title: "挪车码牌生成器",
+    description:
+      "生成专属挪车码牌，支持微信小程序推送通知，让挪车变得更加便捷高效",
     icon: <CarOutlined />,
-    href: '/move-car',
-    status: 'available',
-    category: '生活服务',
-    tags: ['挪车', '码牌', '微信推送'],
-    color: '#f59e0b'
-  }
-]
+    href: "/move-car",
+    status: "available",
+    category: "生活服务",
+    tags: ["挪车", "码牌", "微信推送"],
+    color: "#f59e0b",
+  },
+];
 
 // 分类配置
-const categoryConfig: Record<string, { icon: React.ReactNode; color: string }> = {
-  '编码工具': { 
-    icon: <CodeOutlined />, 
-    color: '#10b981'
+const categoryConfig: Record<
+  string,
+  { icon: React.ReactNode; color: string; description: string }
+> = {
+  编码工具: {
+    icon: <CodeOutlined />,
+    color: "#10b981",
+    description: "编码解码相关的实用工具",
   },
-  '云存储': { 
-    icon: <CloudOutlined />, 
-    color: '#14b8a6'
+  云存储: {
+    icon: <CloudOutlined />,
+    color: "#14b8a6",
+    description: "云存储平台相关工具",
   },
-  '生活服务': { 
-    icon: <CustomerServiceOutlined />, 
-    color: '#f59e0b'
-  }
-}
+  生活服务: {
+    icon: <CustomerServiceOutlined />,
+    color: "#f59e0b",
+    description: "日常生活便民服务工具",
+  },
+};
 
 export default function HomePage() {
-  // 工具分组
-  const categoryGroups = tools.reduce((groups, tool) => {
-    const category = tool.category
-    if (!groups[category]) {
-      groups[category] = []
-    }
-    groups[category].push(tool)
-    return groups
-  }, {} as Record<string, Tool[]>)
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  // 筛选工具
+  const filteredTools = selectedCategory 
+    ? tools.filter(tool => tool.category === selectedCategory)
+    : tools;
+
+  // 获取所有分类
+  const categories = Array.from(new Set(tools.map(tool => tool.category)));
 
   return (
-    <div>
-      {/* 工具分类 */}
-      <div>        <Title level={2} className="gradient-text tool-title">
-          精选工具
+    <div className="homepage-container" style={{ maxWidth: 1200, margin: '0 auto', padding: '24px' }}>
+      {/* 顶部标题区域 */}
+      <div style={{ textAlign: "center", marginBottom: 48 }}>
+        <Title
+          level={1}
+          className="gradient-text"
+          style={{ 
+            fontSize: "2.5em", 
+            marginBottom: 16,
+            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text"
+          }}
+        >
+          🛠️ 爱拓工具箱
         </Title>
-        
-        {Object.entries(categoryGroups).map(([category, categoryTools]) => (          <Card key={category} variant="borderless" styles={{ body: { padding: '32px 24px', marginBottom: 24 } }}>            <Flex align="center" gap="middle" className="category-header" style={{ marginBottom: '24px', paddingBottom: '16px', borderBottom: '1px solid #f0f0f0' }}>
-              <Avatar 
-                size={40}
-                icon={categoryConfig[category]?.icon}
-                className="tool-avatar"
-                style={{ backgroundColor: categoryConfig[category]?.color }}
-              />              <div className="category-info">
-                <Flex align="center" gap="small">
-                  <Title level={3} type="secondary" className="category-title">
-                    {category}
-                  </Title>
-                  <Badge 
-                    count={categoryTools.length} 
-                    color={categoryConfig[category]?.color}
-                  />
-                </Flex>
-              </div>
-            </Flex>
-
-            <Row gutter={[24, 24]}>
-              {categoryTools.map(tool => (
-                <Col key={tool.id} xs={24} sm={12} lg={8}>
-                  <Link href={tool.href}>
-                    <Card
-                      className="hover-lift"
-                      hoverable={tool.status === 'available'}
-                      styles={{ body: { padding: 24 } }}
-                    >
-                      <Flex gap="middle" vertical>
-                        <Flex align="flex-start" gap="middle">                          <Avatar 
-                            size={48}
-                            icon={tool.icon}
-                          />                          <div className="tool-card-content">
-                            <Flex align="center" gap="small">
-                              <Title level={4} className="category-title">
-                                {tool.title}
-                              </Title>
-                              {tool.status === 'coming-soon' && (
-                                <Tag color="warning">敬请期待</Tag>
-                              )}
-                            </Flex>                            <Text type="secondary">
-                              {tool.description}
-                            </Text>
-                          </div>
-                        </Flex>
-
-                        <Space wrap>                          {tool.tags.map(tag => (
-                            <Tag key={tag} color="blue">
-                              {tag}
-                            </Tag>
-                          ))}
-                        </Space>
-
-                        {tool.status === 'available' && (
-                          <Button 
-                            type="primary" 
-                            block
-                            icon={<RightOutlined />}
-                          >
-                            立即使用
-                          </Button>
-                        )}
-                      </Flex>
-                    </Card>
-                  </Link>
-                </Col>
-              ))}
-            </Row>
-          </Card>
-        ))}
+        <Text 
+          style={{ 
+            fontSize: "18px", 
+            color: "#6b7280",
+            display: "block",
+            marginBottom: 24 
+          }}
+        >
+          精心收集和开发的实用在线工具集合，让您的工作和生活更加便捷高效
+        </Text>
+        {/* <Tag 
+          color="blue" 
+          style={{ 
+            fontSize: "14px", 
+            padding: "6px 16px",
+            borderRadius: "20px",
+            border: "none"
+          }}
+        >
+          {tools.length} 个精选工具
+        </Tag> */}
       </div>
+
+      {/* 分类筛选 */}
+      <div style={{ textAlign: "center", marginBottom: 32 }}>
+        <Title level={4} style={{ marginBottom: 16, color: "#374151" }}>
+          🏷️ 按分类筛选
+        </Title>
+        <Space wrap size="middle">
+          <Tag
+            color={selectedCategory === null ? "blue" : "default"}
+            style={{
+              cursor: "pointer",
+              fontSize: "14px",
+              padding: "6px 16px",
+              borderRadius: "20px",
+              border: selectedCategory === null ? "2px solid #1890ff" : "1px solid #d9d9d9",
+              fontWeight: selectedCategory === null ? 600 : 400,
+            }}
+            onClick={() => setSelectedCategory(null)}
+          >
+            <AppstoreOutlined style={{ marginRight: 4 }} />
+            全部工具
+          </Tag>
+          {categories.map((category) => (
+            <Tag
+              key={category}
+              color={selectedCategory === category ? "blue" : "default"}
+              style={{
+                cursor: "pointer",
+                fontSize: "14px",
+                padding: "6px 16px",
+                borderRadius: "20px",
+                border: selectedCategory === category ? "2px solid #1890ff" : "1px solid #d9d9d9",
+                fontWeight: selectedCategory === category ? 600 : 400,
+              }}
+              onClick={() => setSelectedCategory(category)}
+            >
+              {categoryConfig[category]?.icon && (
+                <span style={{ marginRight: 4 }}>
+                  {categoryConfig[category].icon}
+                </span>
+              )}
+              {category}
+            </Tag>
+          ))}
+        </Space>
+        <div style={{ marginTop: 12 }}>
+          <Text type="secondary" style={{ fontSize: "13px" }}>
+            当前显示 {filteredTools.length} 个工具
+            {selectedCategory && ` · ${selectedCategory}`}
+          </Text>
+        </div>
+      </div>
+
+      {/* 工具展示区域 */}
+      <div className="tools-section">
+        <Row gutter={[24, 24]} justify="start">
+          {filteredTools.map((tool) => (
+            <Col key={tool.id} xs={24} sm={12} lg={8} xl={6}>
+              <Link href={tool.href} style={{ textDecoration: "none" }}>
+                <Card
+                  hoverable={tool.status === "available"}
+                  style={{
+                    height: "300px",
+                    borderRadius: 12,
+                    border: "1px solid #f0f0f0",
+                    transition: "all 0.3s ease",
+                    position: "relative",
+                    overflow: "hidden"
+                  }}
+                  bodyStyle={{ 
+                    padding: "24px",
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column"
+                  }}
+                >
+                  {/* 工具头部 */}
+                  <div style={{ marginBottom: 16 }}>
+                    <Flex align="center" gap="large" style={{ marginBottom: 12 }}>
+                      <Avatar
+                        size={44}
+                        icon={tool.icon}
+                        style={{
+                          backgroundColor: tool.color,
+                          fontSize: "20px",
+                        }}
+                      />
+                      <div style={{ flex: 1 }}>
+                        <Title
+                          level={5}
+                          style={{ 
+                            margin: 0, 
+                            fontSize: "16px",
+                            fontWeight: 600,
+                            lineHeight: 1.3
+                          }}
+                        >
+                          {tool.title}
+                        </Title>
+                      </div>
+                    </Flex>
+                    
+                    {/* 分类标签 */}
+                    <div style={{ marginBottom: 8 }}>
+                      <Tag
+                        style={{
+                          borderRadius: 8,
+                          fontSize: "11px",
+                          border: "none",
+                          backgroundColor: `${tool.color}15`,
+                          color: tool.color,
+                          margin: 0
+                        }}
+                      >
+                        {tool.category}
+                      </Tag>
+                      {tool.status === "coming-soon" && (
+                        <Tag color="orange" style={{ marginLeft: 6, fontSize: "11px" }}>
+                          敬请期待
+                        </Tag>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* 工具描述 */}
+                  <div style={{ height: "78px", marginBottom: 16, overflow: "hidden" }}>
+                    <Text
+                      style={{ 
+                        fontSize: "13px", 
+                        lineHeight: "1.5",
+                        color: "#666",
+                        display: "-webkit-box",
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden"
+                      }}
+                    >
+                      {tool.description}
+                    </Text>
+                  </div>
+
+                  {/* 标签 */}
+                  <div style={{ height: "28px", marginBottom: 16, overflow: "hidden" }}>
+                    <Space wrap size="small">
+                      {tool.tags.slice(0, 3).map((tag) => (
+                        <Tag
+                          key={tag}
+                          style={{
+                            borderRadius: 6,
+                            fontSize: "10px",
+                            border: "none",
+                            backgroundColor: "#f5f5f5",
+                            color: "#666",
+                            margin: 0,
+                            padding: "2px 6px"
+                          }}
+                        >
+                          {tag}
+                        </Tag>
+                      ))}
+                    </Space>
+                  </div>
+
+                  {/* 统一的操作按钮 */}
+                  <div style={{ marginTop: "auto" }}>
+                    <Button
+                      type={tool.status === "available" ? "primary" : "default"}
+                      block
+                      size="middle"
+                      icon={tool.status === "available" ? <RightOutlined /> : null}
+                      disabled={tool.status === "coming-soon"}
+                      style={{
+                        borderRadius: 8,
+                        height: 42,
+                        background: tool.status === "available" ? tool.color : "#f5f5f5",
+                        borderColor: tool.status === "available" ? tool.color : "#d9d9d9",
+                        color: tool.status === "available" ? "#fff" : "#999",
+                        fontWeight: 500,
+                        fontSize: "14px"
+                      }}
+                    >
+                      {tool.status === "available" ? "立即使用" : "敬请期待"}
+                    </Button>
+                  </div>
+                </Card>
+              </Link>
+            </Col>
+          ))}
+        </Row>
+
+        {/* 无结果提示 */}
+        {filteredTools.length === 0 && (
+          <div style={{ textAlign: "center", padding: "48px 0" }}>
+            <Text type="secondary" style={{ fontSize: "16px" }}>
+              暂无该分类下的工具
+            </Text>
+          </div>
+        )}
+      </div>
+
+      {/* 分类说明 */}
+      <div style={{ marginTop: 48, marginBottom: 32 }}>
+        <Title level={4} style={{ textAlign: "center", marginBottom: 24 }}>
+          📋 工具分类介绍
+        </Title>
+        <Row gutter={[16, 16]} justify="center">
+          {Object.entries(categoryConfig).map(([category, config]) => (
+            <Col key={category} xs={24} sm={8}>
+              <Card
+                hoverable
+                onClick={() => setSelectedCategory(category)}
+                style={{
+                  textAlign: "center",
+                  borderRadius: 8,
+                  border: `1px solid ${config.color}20`,
+                  backgroundColor: `${config.color}08`,
+                  cursor: "pointer",
+                  transition: "all 0.3s ease"
+                }}
+              >
+                <Avatar
+                  size={32}
+                  icon={config.icon}
+                  style={{
+                    backgroundColor: config.color,
+                    marginBottom: 8
+                  }}
+                />
+                <Title level={5} style={{ margin: 0, fontSize: "14px" }}>
+                  {category}
+                </Title>
+                <Text style={{ fontSize: "12px", color: "#666" }}>
+                  {config.description}
+                </Text>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </div>
+
+      {/* 底部说明 */}
+      <Card
+        style={{
+          marginTop: 32,
+          borderRadius: 12,
+          background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)",
+          border: "1px solid #e2e8f0",
+          textAlign: "center"
+        }}
+        bodyStyle={{ padding: "32px" }}
+      >
+        <Title level={4} style={{ color: "#4b5563", marginBottom: 12 }}>
+          💡 更多工具正在开发中
+        </Title>
+        <Text style={{ color: "#6b7280", fontSize: "14px" }}>
+          我们持续为您带来更多实用工具，让您的工作和生活更加便捷。
+          如果您有好的建议或需求，欢迎联系我们。
+        </Text>
+      </Card>
     </div>
-  )
+  );
 }

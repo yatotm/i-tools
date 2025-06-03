@@ -3,7 +3,7 @@
 import React from 'react'
 import { Inter } from 'next/font/google'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
-import { ConfigProvider, Layout, Typography, Space, theme } from 'antd'
+import { ConfigProvider, Layout, Typography, Space, App } from 'antd'
 import { HomeOutlined, ToolOutlined, GithubOutlined, HeartOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import './globals.css'
@@ -64,55 +64,58 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <AntdRegistry>
-          <ConfigProvider theme={antdTheme}>            <Layout style={{ minHeight: '100vh', background: 'transparent' }}>
-              <Header className="site-header">
-                <div className="site-header-content">                  <Link href="/" className="logo-link">
-                    <Space size="middle">
-                      <ToolOutlined className="logo-icon" />
-                      <span className="gradient-text">爱拓工具箱</span>
-                    </Space>
-                  </Link>
-                  
-                  <Space size="large">                    <Link href="/" className="nav-link">
-                      <Space>
-                        <HomeOutlined />
-                        <span>首页</span>
-                      </Space>
-                    </Link>                    <Link 
-                      href="https://github.com/iLay1678/i-tools" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="nav-link"
-                    >
-                      <Space>
-                        <GithubOutlined />
-                        <span>GitHub</span>
+          <ConfigProvider theme={antdTheme}>
+            <App>
+              <Layout style={{ minHeight: '100vh', background: 'transparent' }}>
+                <Header className="site-header">
+                  <div className="site-header-content">                    <Link href="/" className="logo-link">
+                      <Space size="middle">
+                        <ToolOutlined className="logo-icon" />
+                        <span className="gradient-text">爱拓工具箱</span>
                       </Space>
                     </Link>
+                    
+                    <Space size="large">                      <Link href="/" className="nav-link">
+                        <Space>
+                          <HomeOutlined />
+                          <span>首页</span>
+                        </Space>
+                      </Link>                      <Link 
+                        href="https://github.com/iLay1678/i-tools" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="nav-link"
+                      >
+                        <Space>
+                          <GithubOutlined />
+                          <span>GitHub</span>
+                        </Space>
+                      </Link>
+                    </Space>
+                  </div>
+                </Header>
+                  <Content style={{ padding: '32px 24px', flex: 1 }}>
+                  <div className="site-content">
+                    {children}
+                  </div>
+                </Content>
+                
+                <Footer style={{ 
+                  textAlign: 'center',
+                  background: 'rgba(250, 250, 250, 0.8)',
+                  borderTop: '1px solid rgba(0, 0, 0, 0.06)',
+                  backdropFilter: 'blur(10px)',
+                }}>                  <Space direction="vertical" size="small">
+                    <Space>
+                      <HeartOutlined className="footer-icon" />
+                      <Text className="footer-text">
+                        © {new Date().getFullYear()} 爱拓工具箱 - 让工具更简单，让生活更高效
+                      </Text>
+                    </Space>
                   </Space>
-                </div>
-              </Header>
-                <Content style={{ padding: '32px 24px', flex: 1 }}>
-                <div className="site-content">
-                  {children}
-                </div>
-              </Content>
-              
-              <Footer style={{ 
-                textAlign: 'center',
-                background: 'rgba(250, 250, 250, 0.8)',
-                borderTop: '1px solid rgba(0, 0, 0, 0.06)',
-                backdropFilter: 'blur(10px)',
-              }}>                <Space direction="vertical" size="small">
-                  <Space>
-                    <HeartOutlined className="footer-icon" />
-                    <Text className="footer-text">
-                      © {new Date().getFullYear()} 爱拓工具箱 - 让工具更简单，让生活更高效
-                    </Text>
-                  </Space>
-                </Space>
-              </Footer>
-            </Layout>
+                </Footer>
+              </Layout>
+            </App>
           </ConfigProvider>
         </AntdRegistry>
       </body>

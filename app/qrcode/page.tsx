@@ -13,9 +13,9 @@ import {
   Col,
   Typography,
   Button,
-  message,
   Flex,
   Divider,
+  App,
 } from "antd";
 import { 
   DownloadOutlined, 
@@ -43,6 +43,7 @@ interface QRConfig {
 }
 
 export default function QRCodeGenerator() {
+  const { message } = App.useApp();
   const [form] = Form.useForm();
   const [text, setText] = useState("");
   const [config, setConfig] = useState<QRConfig>({
@@ -60,35 +61,58 @@ export default function QRCodeGenerator() {
   };
 
   const downloadQRCode = () => {
-    const canvas = document.querySelector(
-      "#qr-code-container canvas"
-    ) as HTMLCanvasElement;
-    if (canvas) {
-      const link = document.createElement("a");
-      link.download = "qrcode.png";
-      link.href = canvas.toDataURL();
-      link.click();
-    }
+    // 等待一小段时间确保canvas完全渲染
+    setTimeout(() => {
+      const canvas = document.querySelector(
+        "#qr-code-container canvas"
+      ) as HTMLCanvasElement;
+      if (canvas) {
+        try {
+          const link = document.createElement("a");
+          link.download = "qrcode.png";
+          link.href = canvas.toDataURL("image/png", 1.0);
+          link.click();
+          message?.success("二维码下载成功");
+        } catch (error) {
+          message?.error("下载失败");
+        }
+      } else {
+        message?.error("未找到二维码");
+      }
+    }, 100);
   };
 
-  const copyToClipboard = async () => {
-    const canvas = document.querySelector(
-      "#qr-code-container canvas"
-    ) as HTMLCanvasElement;
-    if (canvas) {
-      canvas.toBlob((blob) => {
-        if (blob) {
-          navigator.clipboard
-            .write([new ClipboardItem({ "image/png": blob })])
-            .then(() => {
-              message.success("二维码已复制到剪贴板");
-            })
-            .catch(() => {
-              message.error("复制失败");
-            });
-        }
-      });
-    }
+  const copyToClipboard = () => {
+    // 等待更长时间确保canvas完全渲染
+    setTimeout(() => {
+      const canvas = document.querySelector(
+        "#qr-code-container canvas"
+      ) as HTMLCanvasElement;
+      
+      if (canvas) {
+        // 直接使用canvas.toBlob方法
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              navigator.clipboard
+                .write([new ClipboardItem({ "image/png": blob })])
+                .then(() => {
+                  message?.success("二维码已复制到剪贴板");
+                })
+                .catch(() => {
+                  message?.error("复制失败");
+                });
+            } else {
+              message?.error("生成图片失败");
+            }
+          },
+          "image/png",
+          1.0
+        );
+      } else {
+        message?.error("未找到二维码");
+      }
+    }, 800); // 增加到800ms等待时间
   };
   return (
     <>
@@ -319,14 +343,14 @@ export default function QRCodeGenerator() {
                       >
                         下载为 PNG
                       </Button>
-                      <Button
+                      {/* <Button
                         block
                         icon={<CopyOutlined />}
                         onClick={copyToClipboard}
                         size="large"
                       >
                         复制到剪贴板
-                      </Button>
+                      </Button> */}
                     </Space>
                   </Card>
                 )}
