@@ -49,9 +49,21 @@ const tools: Tool[] = [
     icon: <QrcodeOutlined />,
     href: "/qrcode",
     status: "available",
-    category: "编码工具",
+    category: "encoding",
     tags: ["二维码", "QR Code", "生成器"],
     color: "#10b981",
+  },
+  {
+    id: "json-formatter",
+    title: "JSON格式化工具",
+    description:
+      "强大的JSON格式化和压缩工具，支持JSON美化、压缩、验证和语法高亮，让JSON数据处理更简单",
+    icon: <CodeOutlined />,
+    href: "/json-formatter",
+    status: "available",
+    category: "encoding",
+    tags: ["JSON", "格式化", "压缩", "验证"],
+    color: "#8b5cf6",
   },
   {
     id: "alipan-tv-token",
@@ -61,7 +73,7 @@ const tools: Tool[] = [
     icon: <CloudDownloadOutlined />,
     href: "/alipan-tv-token",
     status: "available",
-    category: "云存储",
+    category: "storage",
     tags: ["阿里云盘", "TV版", "Token"],
     color: "#14b8a6",
   },
@@ -73,7 +85,7 @@ const tools: Tool[] = [
     icon: <CarOutlined />,
     href: "/move-car",
     status: "available",
-    category: "生活服务",
+    category: "lifestyle",
     tags: ["挪车", "码牌", "微信推送"],
     color: "#f59e0b",
   },
@@ -82,22 +94,25 @@ const tools: Tool[] = [
 // 分类配置
 const categoryConfig: Record<
   string,
-  { icon: React.ReactNode; color: string; description: string }
+  { icon: React.ReactNode; color: string; description: string; name: string }
 > = {
-  编码工具: {
+  encoding: {
     icon: <CodeOutlined />,
     color: "#10b981",
     description: "编码解码相关的实用工具",
+    name: "编码工具",
   },
-  云存储: {
+  storage: {
     icon: <CloudOutlined />,
     color: "#14b8a6",
     description: "云存储平台相关工具",
+    name: "云存储",
   },
-  生活服务: {
+  lifestyle: {
     icon: <CustomerServiceOutlined />,
     color: "#f59e0b",
     description: "日常生活便民服务工具",
+    name: "生活服务",
   },
 };
 
@@ -193,14 +208,14 @@ export default function HomePage() {
                   {categoryConfig[category].icon}
                 </span>
               )}
-              {category}
+              {categoryConfig[category]?.name || category}
             </Tag>
           ))}
         </Space>
         <div style={{ marginTop: 12 }}>
           <Text type="secondary" style={{ fontSize: "13px" }}>
             当前显示 {filteredTools.length} 个工具
-            {selectedCategory && ` · ${selectedCategory}`}
+            {selectedCategory && ` · ${categoryConfig[selectedCategory]?.name || selectedCategory}`}
           </Text>
         </div>
       </div>
@@ -221,11 +236,13 @@ export default function HomePage() {
                     position: "relative",
                     overflow: "hidden"
                   }}
-                  bodyStyle={{ 
-                    padding: "24px",
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column"
+                  styles={{ 
+                    body: {
+                      padding: "24px",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column"
+                    }
                   }}
                 >
                   {/* 工具头部 */}
@@ -266,7 +283,7 @@ export default function HomePage() {
                           margin: 0
                         }}
                       >
-                        {tool.category}
+                        {categoryConfig[tool.category]?.name || tool.category}
                       </Tag>
                       {tool.status === "coming-soon" && (
                         <Tag color="orange" style={{ marginLeft: 6, fontSize: "11px" }}>
@@ -381,7 +398,7 @@ export default function HomePage() {
                   }}
                 />
                 <Title level={5} style={{ margin: 0, fontSize: "14px" }}>
-                  {category}
+                  {categoryConfig[category]?.name || category}
                 </Title>
                 <Text style={{ fontSize: "12px", color: "#666" }}>
                   {config.description}
@@ -401,7 +418,7 @@ export default function HomePage() {
           border: "1px solid #e2e8f0",
           textAlign: "center"
         }}
-        bodyStyle={{ padding: "32px" }}
+        styles={{ body: { padding: "32px" } }}
       >
         <Title level={4} style={{ color: "#4b5563", marginBottom: 12 }}>
           💡 更多工具正在开发中
