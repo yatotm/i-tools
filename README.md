@@ -1,5 +1,15 @@
-# 项目介绍
-爱拓工具箱
+<h1 align="center">爱拓工具箱</h1>
+
+<div align="center">
+
+[![Stars](https://img.shields.io/github/stars/iLay1678/i-tools?style=flat)](https://github.com/iLay1678/i-tools)
+[![Forks](https://img.shields.io/github/forks/iLay1678/i-tools?style=flat)](https://github.com/iLay1678/i-tools)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/iLay1678/i-tools/docker-build.yml)
+
+
+</div>
+
+
 
 ## 功能列表
 1. **阿里云盘TV授权**
@@ -8,7 +18,11 @@
    - 生成挪车码牌，方便他人联系车主
 3. **二维码生成**
    - 生成自定义二维码
-4. **敬请期待**
+4. **JSON格式化工具**
+   - 强大的JSON处理工具，支持格式化、压缩、验证和统计分析
+   - 实时语法检查和错误提示
+   - 支持文件上传下载和一键复制
+5. **敬请期待**
    - 更多工具正在开发中...
 
 # 部署
@@ -37,3 +51,6 @@ docker run --name=i-tools -d -p 3000:3000 ghcr.io/ilay1678/i-tools:latest
    - 框架预设: 选择 `Next.js`
    - 绑定-兼容性标识 nodejs_compat
    - 点击 "保存并部署"
+
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/iLay1678/i-tools.svg?variant=adaptive)](https://starchart.cc/iLay1678/i-tools)
