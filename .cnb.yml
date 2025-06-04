@@ -13,11 +13,11 @@
     script: echo -n "latest"
     exports:
       info: IMAGE_VERSION
-  - name: set IMAGE_NAME_WITH_TAG
-    script: echo -n "${CNB_DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_VERSION}"
-    exports:
-      info: IMAGE_NAME_WITH_TAG
-  - name: set additional tags
+  # - name: set IMAGE_NAME_WITH_TAG
+  #   script: echo -n "${CNB_DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_VERSION}"
+  #   exports:
+  #     info: IMAGE_NAME_WITH_TAG
+  - name: SET TAGS
     script: |
       REGISTRY_LIST="$CNB_DOCKER_REGISTRY ghcr.io"
       
@@ -136,32 +136,32 @@
     - *make-image-envs-cnb
     - *build-by-arch-cnb
 
-.multi-arch-push: &multi-arch-push-cnb
-  - name: await the amd64
-    type: cnb:await
-    options:
-      key: build-cnb-amd64
-  - name: await the arm64
-    type: cnb:await
-    options:
-      key: build-cnb-arm64
-  - name: manifest
-    image: cnbcool/manifest:latest
-    settings:
-      target: $IMAGE_NAME_WITH_TAG
-      template: ${IMAGE_NAME_WITH_TAG}-OS-ARCH
-      platforms:
-        - linux/amd64
-        - linux/arm64
+# .multi-arch-push: &multi-arch-push-cnb
+#   - name: await the amd64
+#     type: cnb:await
+#     options:
+#       key: build-cnb-amd64
+#   - name: await the arm64
+#     type: cnb:await
+#     options:
+#       key: build-cnb-arm64
+#   - name: manifest
+#     image: cnbcool/manifest:latest
+#     settings:
+#       target: $IMAGE_NAME_WITH_TAG
+#       template: ${IMAGE_NAME_WITH_TAG}-OS-ARCH
+#       platforms:
+#         - linux/amd64
+#         - linux/arm64
 
 main:
   push:
     - *amd64-arch-build-cnb
     - *arm64-arch-build-cnb
-    - name: conbine-arch-cnb
-      imports: https://cnb.cool/ilay1678/cloud-native-build/-/blob/main/github_secret.yml
-      services:
-        - docker    
-      stages:
-        - *make-image-envs-cnb
-        - *multi-arch-push-cnb
+    # - name: conbine-arch-cnb
+    #   imports: https://cnb.cool/ilay1678/cloud-native-build/-/blob/main/github_secret.yml
+    #   services:
+    #     - docker    
+    #   stages:
+    #     - *make-image-envs-cnb
+    #     - *multi-arch-push-cnb
