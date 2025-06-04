@@ -6,6 +6,7 @@ on:
       - main
     paths-ignore:
       - 'README.md'
+      - '.cnb.yml'
       - '.gitignore'
   pull_request:
     branches:
