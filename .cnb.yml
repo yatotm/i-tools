@@ -25,25 +25,12 @@
       
       # 为每个仓库生成标签
       for registry in $REGISTRY_LIST; do
-        # 基础标签
-        TAGS="${TAGS} ${registry}/${IMAGE_NAME}:${IMAGE_VERSION}-linux-${BUILD_ARCH}"
-        TAGS="${TAGS} ${registry}/${IMAGE_NAME}:${IMAGE_VERSION}-${BUILD_ARCH}"
+        # 标签
+        TAGS="${TAGS} ${registry}/${IMAGE_NAME}:${IMAGE_VERSION}
         
-        # latest标签
-        if [ "$IMAGE_VERSION" = "latest" ]; then
-          TAGS="${TAGS} ${registry}/${IMAGE_NAME}:latest-${BUILD_ARCH}"
-        fi
         
-        # main分支的stable标签
-        if [ "$CNB_BRANCH" = "main" ]; then
-          TAGS="${TAGS} ${registry}/${IMAGE_NAME}:stable-${BUILD_ARCH}"
-        fi
-        
-        # 添加Git SHA标签（如果有的话）
-        if [ -n "$CNB_COMMIT_SHA" ]; then
-          SHORT_SHA=$(echo "$CNB_COMMIT_SHA" | cut -c1-8)
-          TAGS="${TAGS} ${registry}/${IMAGE_NAME}:${SHORT_SHA}-${BUILD_ARCH}"
-        fi
+        # 添加Git SHA标签
+        TAGS="${TAGS} ${registry}/${IMAGE_NAME}:${CNB_COMMIT_SHORT}"
       done
       
       echo -n "$TAGS"
