@@ -3,7 +3,6 @@
 <div align="center">
 
 [![Stars](https://img.shields.io/github/stars/iLay1678/i-tools?style=flat)](https://github.com/iLay1678/i-tools)
-[![Forks](https://img.shields.io/github/forks/iLay1678/i-tools?style=flat)](https://github.com/iLay1678/i-tools)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/iLay1678/i-tools/docker-build.yml)
 ![badge](https://cnb.cool/ilay1678/i-tools/-/badge/git/latest/ci/status/push)
 
