@@ -1,3 +1,6 @@
+include:
+  # 构建、发布到 docker hub
+  - https://cnb.cool/cnb/plugins/market/-/blob/main/hub.docker.com.yml
 .make-image-envs-cnb: &make-image-envs-cnb
   - name: set IMAGE_NAME
     script: echo -n "$CNB_REPO_SLUG"
