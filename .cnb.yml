@@ -1,7 +1,9 @@
 # 帮助文档地址: https://docs.cnb.cool/zh/artifact/docker.html
 main:
   push:
-    - services:
+    - runner:
+        tags: cnb:arch:amd64
+      services:
         - docker
       stages:
         - name: 编译
@@ -11,5 +13,33 @@ main:
           script: cd /workspace && bun install && bun run build
         - name: docker login
           script: docker login -u ${CNB_TOKEN_USER_NAME} -p "${CNB_TOKEN}" ${CNB_DOCKER_REGISTRY}
+        - name: set docker tag
+          script: echo -n "${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:latest"
+          exports:
+            info: IMAGE_TAG
         - name: docker build
-          script: docker buildx build --platform linux/amd64,linux/arm64,linux/arm -t ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:latest -o type=registry .
+          script: docker build -t $IMAGE_TAG .
+        - name: docker push
+          script: docker push $IMAGE_TAG
+
+    # 指定在 arm64/v8 架构构建节点上执行
+    - runner:
+        tags: cnb:arch:arm64:v8
+      services:
+        - docker
+      stages:
+        - name: 编译
+          image: oven/bun:latest
+          volumes:
+            - /workspace:/workspace:row
+          script: cd /workspace && bun install && bun run build
+        - name: docker login
+          script: docker login -u ${CNB_TOKEN_USER_NAME} -p "${CNB_TOKEN}" ${CNB_DOCKER_REGISTRY}
+        - name: set docker tag
+          script: echo -n "${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:latest"
+          exports:
+            info: IMAGE_TAG
+        - name: docker build
+          script: docker build -t $IMAGE_TAG .
+        - name: docker push
+          script: docker push $IMAGE_TAG
