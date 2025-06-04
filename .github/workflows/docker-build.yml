@@ -13,6 +13,7 @@ on:
     paths-ignore: 
       - 'README.md'
       - '.gitignore'
+      - '.cnb.yml'
       - '.github/workflows/clean-up.yml'
 permissions:
   contents: read
