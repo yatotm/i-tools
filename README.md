@@ -34,6 +34,11 @@
 ```
 docker run --name=i-tools -d -p 3000:3000 ghcr.io/ilay1678/i-tools:latest 
 ```
+国内镜像
+```
+docker run --name=i-tools -d -p 3000:3000 docker.cnb.cool/ilay1678/i-tools:latest 
+```
+
 
 ## Cloudflare Pages 部署
 ### 1. Fork 项目仓库
