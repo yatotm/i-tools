@@ -1,6 +1,6 @@
 
 # builder
-FROM oven/bun:latest as builder
+FROM oven/bun:debian as builder
 
 WORKDIR /app
 
