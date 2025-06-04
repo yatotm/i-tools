@@ -30,7 +30,7 @@
 ```
 docker run --name=i-tools -d -p 3000:3000 ghcr.io/ilay1678/i-tools:latest 
 ```
-国内机器推荐使用cnb镜像
+国内镜像
 ```
 docker run --name=i-tools -d -p 3000:3000 docker.cnb.cool/ilay1678/i-tools:latest 
 ```
