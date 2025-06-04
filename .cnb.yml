@@ -17,10 +17,44 @@
     script: echo -n "${CNB_DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_VERSION}"
     exports:
       info: IMAGE_NAME_WITH_TAG
+  - name: set additional tags
+    script: |
+      REGISTRY_LIST="$CNB_DOCKER_REGISTRY ghcr.io"
+      
+      TAGS=""
+      
+      # 为每个仓库生成标签
+      for registry in $REGISTRY_LIST; do
+        # 基础标签
+        TAGS="${TAGS} ${registry}/${IMAGE_NAME}:${IMAGE_VERSION}-linux-${BUILD_ARCH}"
+        TAGS="${TAGS} ${registry}/${IMAGE_NAME}:${IMAGE_VERSION}-${BUILD_ARCH}"
+        
+        # latest标签
+        if [ "$IMAGE_VERSION" = "latest" ]; then
+          TAGS="${TAGS} ${registry}/${IMAGE_NAME}:latest-${BUILD_ARCH}"
+        fi
+        
+        # main分支的stable标签
+        if [ "$CNB_BRANCH" = "main" ]; then
+          TAGS="${TAGS} ${registry}/${IMAGE_NAME}:stable-${BUILD_ARCH}"
+        fi
+        
+        # 添加Git SHA标签（如果有的话）
+        if [ -n "$CNB_COMMIT_SHA" ]; then
+          SHORT_SHA=$(echo "$CNB_COMMIT_SHA" | cut -c1-8)
+          TAGS="${TAGS} ${registry}/${IMAGE_NAME}:${SHORT_SHA}-${BUILD_ARCH}"
+        fi
+      done
+      
+      echo -n "$TAGS"
+    exports:
+      info: BUILD_TAGS
 
 .build-by-arch-cnb: &build-by-arch-cnb
   - name: docker login for docker.cnb.cool
     script: docker login -u "$CNB_TOKEN_USER_NAME" -p "$CNB_TOKEN" $CNB_DOCKER_REGISTRY
+  - name: docker login for ghcr.io
+    script: docker login -u "$GITHUB_USERNAME" -p "$GITHUB_PACKAGE_TOKEN" ghcr.io
   - name: set DOCKERFILE_DIR
     script: |
       if [ -f "docker/Dockerfile.linux.$BUILD_ARCH" ]; then
@@ -34,8 +68,43 @@
     if: |
       [ -f $DOCKERFILE_DIR ]
     script:
-      - docker build -f $DOCKERFILE_DIR -t $IMAGE_NAME_WITH_TAG-linux-$BUILD_ARCH .
-      - docker push $IMAGE_NAME_WITH_TAG-linux-$BUILD_ARCH
+      - |
+        # 构建命令，将所有标签添加到build命令中
+        BUILD_CMD="docker build -f $DOCKERFILE_DIR"
+        for tag in $BUILD_TAGS; do
+          BUILD_CMD="$BUILD_CMD -t $tag"
+        done
+        BUILD_CMD="$BUILD_CMD ."
+        echo "执行构建命令: $BUILD_CMD"
+        eval $BUILD_CMD
+      - |
+        # 推送所有标签，带错误处理
+        PUSH_SUCCESS=0
+        PUSH_FAILED=0
+        
+        for tag in $BUILD_TAGS; do
+          echo "正在推送: $tag"
+          if docker push $tag; then
+            echo "✅ 成功推送: $tag"
+            PUSH_SUCCESS=$((PUSH_SUCCESS + 1))
+          else
+            echo "❌ 推送失败: $tag"
+            PUSH_FAILED=$((PUSH_FAILED + 1))
+          fi
+        done
+        
+        echo "推送统计: 成功 $PUSH_SUCCESS 个，失败 $PUSH_FAILED 个"
+        
+        # 如果有推送失败，但至少有一个成功，给出警告
+        if [ $PUSH_FAILED -gt 0 ] && [ $PUSH_SUCCESS -gt 0 ]; then
+          echo "⚠️  部分推送失败，请检查仓库权限和网络连接"
+          exit 1
+        elif [ $PUSH_FAILED -gt 0 ]; then
+          echo "❌ 所有推送都失败了"
+          exit 1
+        else
+          echo "🎉 所有镜像推送成功！"
+        fi
   - name: resolve 
     type: cnb:resolve
     options:
@@ -49,6 +118,7 @@
     - docker
   env:
     BUILD_ARCH: amd64
+  imports: https://cnb.cool/ilay1678/cloud-native-build/-/blob/main/github_secret.yml
   stages:
     - *make-image-envs-cnb
     - *build-by-arch-cnb
@@ -59,6 +129,7 @@
     tags: cnb:arch:arm64:v8
   env:
     BUILD_ARCH: arm64
+  imports: https://cnb.cool/ilay1678/cloud-native-build/-/blob/main/github_secret.yml
   services:
     - docker
   stages:
@@ -88,6 +159,7 @@ main:
     - *amd64-arch-build-cnb
     - *arm64-arch-build-cnb
     - name: conbine-arch-cnb
+      imports: https://cnb.cool/ilay1678/cloud-native-build/-/blob/main/github_secret.yml
       services:
         - docker    
       stages:
