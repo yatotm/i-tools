@@ -28,6 +28,8 @@ main:
       services:
         - docker
       stages:
+        - name: 等待2min
+          script: sleep 120
         - name: 编译
           image: oven/bun:latest
           volumes:
