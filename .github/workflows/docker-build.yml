@@ -8,6 +8,8 @@ on:
       - 'README.md'
       - '.cnb.yml'
       - '.gitignore'
+      - '.github/workflows/clean-up.yml'
+      - '.cnb/web_trigger.yml'
   pull_request:
     branches:
       - main
@@ -16,6 +18,7 @@ on:
       - '.gitignore'
       - '.cnb.yml'
       - '.github/workflows/clean-up.yml'
+      - '.cnb/web_trigger.yml'
 permissions:
   contents: read
   packages: write
