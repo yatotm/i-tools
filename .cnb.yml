@@ -62,7 +62,7 @@
         BUILD_CMD="$BUILD_CMD ."
         echo "执行构建命令: $BUILD_CMD"
         eval $BUILD_CMD
-      - |
+        
         # 推送所有标签，带错误处理
         PUSH_SUCCESS=0
         PUSH_FAILED=0
