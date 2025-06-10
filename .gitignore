@@ -28,3 +28,4 @@ logs
 .dev.vars
 .vercel
 .next
+.open-next
