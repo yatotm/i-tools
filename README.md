@@ -21,12 +21,20 @@
 5. **敬请期待**
    - 更多工具正在开发中...
 
-# 部署
+## 部署
 
-## vercel部署
-[<img src="https://vercel.com/button" alt="Deploy on vercel" height="30">](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FiLay1678%2Fi-tools&&project-name=i-tools&repository-name=i-tools)
+### 一键部署
 
-## Docker部署
+#### Vercel 自动部署
+
+[![vhAstro-Theme](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/iLay1678/i-tools)
+
+#### Cloudflare Pages 自动部署
+
+[![vhAstro-Theme](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/iLay1678/i-tools)
+
+
+### Docker部署
 ```
 docker run --name=i-tools -d -p 3000:3000 ghcr.io/ilay1678/i-tools:latest 
 ```
@@ -34,24 +42,6 @@ docker run --name=i-tools -d -p 3000:3000 ghcr.io/ilay1678/i-tools:latest
 ```
 docker run --name=i-tools -d -p 3000:3000 docker.cnb.cool/ilay1678/mirrors/i-tools:latest 
 ```
-
-
-## Cloudflare Pages 部署
-### 1. Fork 项目仓库
-1. 点击右上角的 "Fork" 按钮创建你自己的副本
-### 2. 在 Cloudflare 中部署
-#### 2.1 前置准备
-1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com)
-2. 在左侧菜单找到并点击 "Pages"
-3. 点击 "连接到 Git" 按钮
-4. 按提示关联你的 GitHub 账号
-#### 2.2 创建项目
-1. 选择你刚才 fork 的仓库
-2. 点击 "开始设置"
-3. 在项目配置页面:
-   - 框架预设: 选择 `Next.js`
-   - 绑定-兼容性标识 nodejs_compat
-   - 点击 "保存并部署"
 
 ## Stargazers over time
 [![Stargazers over time](https://starchart.cc/iLay1678/i-tools.svg?variant=adaptive)](https://starchart.cc/iLay1678/i-tools)
