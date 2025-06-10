@@ -6,6 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "cloudflare":"npx @cloudflare/next-on-pages@1",
     "export": "next export"
   },
   "dependencies": {
