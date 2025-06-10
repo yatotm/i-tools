@@ -7,7 +7,7 @@
     "start": "next start",
     "lint": "next lint",
     "deploy":"npx wrangler deploy",
-    "postbuild": "opennextjs-cloudflare build -s",
+    "cf-build": "next build && opennextjs-cloudflare build -s",
     "export": "next export"
   },
   "dependencies": {
