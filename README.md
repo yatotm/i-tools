@@ -32,14 +32,11 @@
 </a>
 
 #### Cloudflare Pages 自动部署
-##### 点击按钮
 
 <a href="https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/iLay1678/i-tools" target="_blank">
   <img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare Workers" />
 </a>
 
-##### 修改构建配置
-构建命令改为`bun run cf-build`
 
 
 
