@@ -6,8 +6,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "cloudflare":"npx @cloudflare/next-on-pages@1",
-    "deploy":"npx wrangler pages deploy",
+    "deploy":"npx wrangler deploy",
+    "postbuild": "opennextjs-cloudflare build -s",
     "export": "next export"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "1.0.0-beta.3",
     "@types/node": "^20.17.52",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
