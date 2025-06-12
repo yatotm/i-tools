@@ -43,8 +43,17 @@ export default function AlipanTvToken() {
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
   const [currentSid, setCurrentSid] = useState("");
+  const [currentHost, setCurrentHost] = useState("");
 
   const checkTimer = useRef<NodeJS.Timeout | null>(null);
+
+  // 获取当前主机地址
+  const getCurrentHost = () => {
+    if (typeof window !== 'undefined') {
+      return `${window.location.protocol}//${window.location.host}`;
+    }
+    return '';
+  };
   async function generateAuthUrl() {
     try {
       setIsLoading(true);
@@ -135,6 +144,9 @@ export default function AlipanTvToken() {
   };
 
   useEffect(() => {
+    // 设置当前主机地址
+    setCurrentHost(getCurrentHost());
+    
     setIsNoticeOpen(true);
     if (!hasGenerated) {
       generateAuthUrl();
@@ -273,7 +285,7 @@ export default function AlipanTvToken() {
         >
           <Space direction="vertical" size="large" style={{ width: "100%" }}>
             <Row gutter={[24, 24]}>
-              <Col xs={24} md={8}>
+              <Col xs={24} md={12}>
                 <Card 
                   title={
                     <Space>
@@ -283,44 +295,18 @@ export default function AlipanTvToken() {
                   } 
                   size="small"
                 >
-                  <Typography.Paragraph>
-                    <Typography.Text code>/api/oauth/alipan/token</Typography.Text>
-                    <br />
-                    刷新令牌接口
-                  </Typography.Paragraph>
-                </Card>
-              </Col>
-
-              <Col xs={24} md={8}>
-                <Card 
-                  title={
-                    <Space>
-                      <SettingOutlined />
-                      <span>Alist 配置</span>
-                    </Space>
-                  } 
-                  size="small"
-                >
-                  <Space direction="vertical" size="small" style={{ width: "100%" }}>
-                    <Typography.Paragraph>
+                 <Typography.Paragraph>
                       <Typography.Text strong>Oauth令牌链接：</Typography.Text>
                       <br />
                       <Typography.Text code>
-                        http://alipan-tv-token:3000/api/oauth/alipan/token
+                        {currentHost}/api/oauth/alipan/token
                       </Typography.Text>
                     </Typography.Paragraph>
-                    <Typography.Paragraph>
-                      <Typography.Text strong>获取令牌访问：</Typography.Text>
-                      <br />
-                      <Typography.Text code>
-                        http://你的IP:3000/alipan-tv-token
-                      </Typography.Text>
-                    </Typography.Paragraph>
-                  </Space>
                 </Card>
               </Col>
 
-              <Col xs={24} md={8}>
+
+              <Col xs={24} md={12}>
                 <Card 
                   title={
                     <Space>
