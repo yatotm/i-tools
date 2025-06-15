@@ -9,7 +9,7 @@ interface QrCodeData {
 
 export async function POST() {
   try {
-    const response = await fetch('http://api.extscreen.com/aliyundrive/qrcode', {
+    const response = await fetch('https://api.extscreen.com/aliyundrive/qrcode', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
