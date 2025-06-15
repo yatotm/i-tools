@@ -54,7 +54,7 @@ export async function GET(
           Object.entries(sendData).map(([k, v]) => [k, String(v)])
         )
 
-        const tokenResponse = await fetch('http://api.extscreen.com/aliyundrive/v3/token', {
+        const tokenResponse = await fetch('https://api.extscreen.com/aliyundrive/v3/token', {
           method: 'POST',
           headers: headers,
           body: JSON.stringify(sendData)
