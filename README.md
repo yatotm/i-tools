@@ -49,5 +49,9 @@ docker run --name=i-tools -d -p 3000:3000 ghcr.io/ilay1678/i-tools:latest
 docker run --name=i-tools -d -p 3000:3000 docker.cnb.cool/ilay1678/mirrors/i-tools:latest 
 ```
 
+## 自动同步最近更改
+
+在创建的仓库中启用本仓库自带的 GitHub Actions 自动同步功能（见 `.github/workflows/sync.yml`）。
+
 ## Stargazers over time
 [![Stargazers over time](https://starchart.cc/iLay1678/i-tools.svg?variant=adaptive)](https://starchart.cc/iLay1678/i-tools)
