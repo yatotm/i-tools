@@ -22,6 +22,7 @@ import {
   CustomerServiceOutlined,
   ToolOutlined,
   AppstoreOutlined,
+  ThunderboltOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { useState } from "react";
@@ -41,6 +42,18 @@ interface Tool {
 }
 
 const tools: Tool[] = [
+  {
+    id: "random-string",
+    title: "随机字符串生成器",
+    description:
+      "生成安全可靠的随机字符串，支持多种字符集配置、批量生成和强度评估，适用于密码生成、API密钥创建等场景",
+    icon: <ThunderboltOutlined />,
+    href: "/random-string",
+    status: "available",
+    category: "encoding",
+    tags: ["随机字符串", "密码生成", "安全"],
+    color: "#722ed1",
+  },
   {
     id: "qrcode",
     title: "二维码生成器",
