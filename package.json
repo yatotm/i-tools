@@ -1,6 +1,13 @@
 {
-  "name": "next-app",
-  "private": true,
+  "name": "i-tools",
+  "version": "1.0.0",
+  "description": "爱拓工具箱",
+  "author": "iLay1678",
+  "keywords": [
+    "tools"
+  ],
+  "repository": "https://github.com/iLay1678/i-tools.git",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
