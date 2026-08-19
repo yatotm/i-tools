@@ -79,7 +79,7 @@
     "typescript": "^5.8.3"
   },
   "overrides": {
-    "dompurify": "3.3.2",
+    "dompurify": "3.4.13",
     "minimatch": "10.2.5",
     "glob": "13.0.6",
     "editorconfig": "3.0.2",

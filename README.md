@@ -134,24 +134,15 @@ npm run build
 
 ## 📦 部署
 
-### Vercel / Cloudflare / EdgeOne
+### EdgeOne / Vercel / Cloudflare
 
 推荐使用 EdgeOne 进行一键部署。
 
-<div align="left">
-  
-  <a href="https://edgeone.ai/pages/new?repository-url=https://github.com/iLay1678/i-tools" target="_blank">
-    <img src="https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg" alt="Deploy to EdgeOne Pages" height="32" />
-  </a>
-  &nbsp;&nbsp;
-  <a href="https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/iLay1678/i-tools" target="_blank">
-    <img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare Workers" height="32" />
-  </a>
-  &nbsp;&nbsp;
-  <a href="https://vercel.com/new/clone?repository-url=https://github.com/iLay1678/i-tools" target="_blank">
-    <img src="https://vercel.com/button" alt="Deploy with Vercel" height="32" />
-  </a>
-</div>
+[![使用 EdgeOne Pages 部署](https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg)](https://console.cloud.tencent.com/edgeone/pages/new?repository-url=https://github.com/iLay1678/i-tools)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/iLay1678/i-tools)
+
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/iLay1678/i-tools)
 
 ### Docker 部署
 
